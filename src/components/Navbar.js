@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { GrShop } from 'react-icons/gr';
 import { Container } from './Container';
 import { H3 } from './Text';
+import { Link } from 'react-router-dom';
 
 const Nav = styled(Container)`
   padding-top: 3.75rem;
@@ -32,17 +33,26 @@ const NavItem = styled(H3)`
 const NavIcon = styled.div`
 `;
 
+
 function Navbar() {
   return (
     <Nav>
       <NavbarItems>
-        <NavLogo>TOYS</NavLogo>
-        <NavItem>Home</NavItem>
-        <NavItem>Shop</NavItem>
-        <NavItem>Login</NavItem>
+        <NavLogo>
+          <Link to="/">TOYS</Link>
+        </NavLogo>
+        <NavItem>
+          <Link to="/">Home</Link>
+        </NavItem>
+        <NavItem>
+          <Link to="shop">Shop</Link>
+        </NavItem>
+        <NavItem>
+          <Link to="login">Login</Link>
+        </NavItem>
       </NavbarItems>
       <NavIcon>
-        <GrShop  size={30}/>
+        <Link to="/cart"><GrShop  size={30}/></Link>
       </NavIcon>
     </Nav>
   )
