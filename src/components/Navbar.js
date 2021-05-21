@@ -27,7 +27,6 @@ const NavLogo = styled.div`
 
 const NavItem = styled(H3)`
   color: ${props => props.theme.colors.black};
-  
 `;
 
 const NavIcon = styled.div`
