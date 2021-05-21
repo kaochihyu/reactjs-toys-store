@@ -2,9 +2,9 @@ import React from 'react';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import GlobalStyle from './globalStyle';
 import Theme from './Theme';
-import Navbar from './components/Navbar'
+import Navbar from './components/Navbar';
 
-function App () {
+function App() {
   return (
     <>
       <Theme>
@@ -17,7 +17,7 @@ function App () {
         </Router>
       </Theme>
     </>
-  )
-};
+  );
+}
 
 export default App;
