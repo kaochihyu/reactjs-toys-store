@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { GrShop } from 'react-icons/gr';
-import { AiOutlineMenu } from 'react-icons/ai'
+import { AiOutlineMenu } from 'react-icons/ai';
 import { Container } from './Container';
 import { H3 } from './Text';
-import { Link } from 'react-router-dom';
+import { CloseButton } from './Button';
 
 const Nav = styled(Container)`
   padding-top: 3.75rem;
@@ -32,17 +33,33 @@ const MobileNavLogo = styled.div`
 
 const MobileNavItems = styled.div`
   display: none;
-  ${({ theme }) => theme.media.sm} {
-    dispaly: block;
-    position: absolute;
-    top: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 25rem;
+  background-color: ${(props) => props.theme.colors.black};
+
+  &.open {
     left: 0;
-    width: 100%;
+    transition: 0.3s ease-out;
+  }
+
+  &.close {
+    left: -100%;
+    transition: 0.3s ease-out;
+  }
+
+  ${H3} {
+    color: ${(props) => props.theme.colors.white};
+    margin-bottom: ${(props) => props.theme.space.md};
+  }
+  ${({ theme }) => theme.media.sm} {
+    display: block;
   }
 `;
 
 const MobileNavItemsContainer = styled.div`
-  padding: 5rem auto;
+  padding: 5rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -75,15 +92,21 @@ const NavShopIcon = styled(GrShop)`
 `;
 
 function Navbar() {
+  const [click, setClick] = useState(false);
+
+  const handleClick = () => {
+    setClick(!click);
+  };
 
   return (
     <Nav>
-      <MobileMenuIcon size={30} />
+      <MobileMenuIcon size={30} onClick={handleClick} />
       <MobileNavLogo>
         <Link to="/">TOYS</Link>
       </MobileNavLogo>
-      <MobileNavItems>
+      <MobileNavItems className={click ? 'open' : 'close'}>
         <MobileNavItemsContainer>
+          <CloseButton handleClick={handleClick} />
           <NavItem>
             <Link to="/">Home</Link>
           </NavItem>
@@ -95,7 +118,6 @@ function Navbar() {
           </NavItem>
         </MobileNavItemsContainer>
       </MobileNavItems>
-
 
       <NavItems>
         <NavLogo>
