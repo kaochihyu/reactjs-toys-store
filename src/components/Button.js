@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
 import { GrClose } from 'react-icons/gr';
-import { H3 } from './Text';
-
+import { H2, H3 } from './Text';
 
 const Button = styled.button`
   display: flex;
@@ -40,7 +39,7 @@ const StyledGoButton = styled(Button)`
 const StyledArrowButton = styled(Button)`
   width: 3.75rem;
   height: 3.75rem;
-  background-color: #000;
+  background-color: ${props => props.bgColor === 'white' ? 'white' : 'black'}
 `;
 
 const StyledCloseButton = styled(Button)`
@@ -52,6 +51,13 @@ const StyledCloseButton = styled(Button)`
   background-color: #fff;
 `;
 
+const StyledActionButton = styled(Button)`
+  width: 16.25rem;
+  padding: 1rem;
+  background-color: ${props => props.color === 'primary' ? '#fff' : '#000'};
+  background-color: ${props => props.color === 'primary' ? '#000' : '#fff'};
+`;
+
 export const GoButton = ({ content, route }) => {
   return (
     <StyledGoButton as={Link} to={route}>
@@ -61,15 +67,15 @@ export const GoButton = ({ content, route }) => {
   )
 };
 
-export const ArrowButton = ({ direction, handleClick }) => {
+export const ArrowButton = ({ bgColor, color, direction, handleClick }) => {
 
   return (
-    <StyledArrowButton onClick={handleClick}>
+    <StyledArrowButton bgColor={bgColor} onClick={handleClick}>
       {direction === 'left'
         ?
-        <RiArrowLeftSLine size={'3rem'} color={'#fff'} />
+        <RiArrowLeftSLine size={'3rem'} color={color} />
         :
-        <RiArrowRightSLine size={'3rem'} color={'#fff'} />
+        <RiArrowRightSLine size={'3rem'} color={color} />
       }
 
     </StyledArrowButton>
@@ -83,3 +89,13 @@ export const CloseButton = ({ handleClick }) => {
     </StyledCloseButton>
   )
 }
+
+export const ActionButton = ({ color, content }) => {
+  return (
+    <StyledActionButton color={color}>
+      <H2>{content}</H2>
+    </StyledActionButton>
+  )
+}
+
+

@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Container } from '../components/Container';
-import hero from '../image/hero.jpg';
+import hero_1 from '../image/hero_1.jpg';
+import hero_2 from '../image/hero_2.jpg';
+import hero_3 from '../image/hero_3.png';
+import hero_4 from '../image/hero_4.png';
 import about_1 from '../image/about_1.jpg';
-import { H1, P } from '../components/Text'
+import about_2 from '../image/about_2.jpg';
+import { H1, H3, P } from '../components/Text'
 import { GoButton, ArrowButton } from '../components/Button';
+import { Footer } from '../components/Footer';
 
-const Hero = styled.div`
+
+const Home = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -24,6 +29,7 @@ const HeroContainer = styled.div`
   grid-template-areas: "hero_image hero_description";
 
   ${({ theme }) => theme.media.md} {
+    height: initial;
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
@@ -36,21 +42,21 @@ const HeroImage = styled.div`
   overflow-x: hidden;
   ${({ theme }) => theme.media.md} {
     overflow-x: initial;
+    height: 25rem;
   }
 `;
 
 const HeroImageContainer = styled.div`
   width: auto;
   height: 100%;
-  min-height: 25rem;
   white-space: nowrap; 
   transform: translateX(-${props => props.slidePage}%);
   transition: 0.5s ease-in-out;
 
   > img {
-    display: inline-block;
     width: 100%;
     height: 100%;
+    display: inline-block;
     object-fit: cover;
     object-position: 50% 50%;
   }
@@ -82,19 +88,61 @@ const HeroContent = styled.div`
   }
 
   ${({ theme }) => theme.media.md} {
-    padding: 5rem 2.5rem 0 2.5rem;
+    padding: 5rem 2.5rem 5rem 2.5rem;
   }
 `;
 
-const AboutSection = styled.div`
+const About = styled.div`
+  width: 100%;
+  height: 50%;
+  ${({ theme }) => theme.media.md} {
+    height: initial;
+  }
+`;
+
+const AboutContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  ${({ theme }) => theme.media.md} {
+    display: block;
+  }
 `;
 
 const AboutImage = styled.div`
+  width: 100%;
+  height: auto;
+  flex: 2;
+  > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+  }
 
+  ${({ theme }) => theme.media.md} {
+    flex: 1;
+    height: 21rem;
+  }
 `;
 
 const AboutDescription = styled.div`
-  background-color: #000;
+  flex: 3;
+  padding: ${({ theme }) => theme.space.lg};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: justify;
+  > * ~ * {
+    margin-top: ${({ theme }) => theme.space.sm};
+    color: ${({ theme }) => theme.colors.lightGray};
+  }
+
+  ${({ theme }) => theme.media.md} {
+    flex: 1;
+    padding: ${({ theme }) => theme.space.md};
+    height: 21rem;
+  }
 `;
 
 function HomePage() {
@@ -103,47 +151,58 @@ function HomePage() {
   const handlePageMinus = () => {
     setSlidePage(slidePage - 1)
     if (slidePage < 1) {
-      setSlidePage(2)
+      setSlidePage(3)
     }
   }
 
   const handlePagePlus = () => {
     setSlidePage(slidePage + 1)
-    if (slidePage > 1) {
+    if (slidePage > 2) {
       setSlidePage(0)
     }
   }
 
+
   return (
-    <>
-      <Hero>
-        <HeroContainer>
-          <HeroImage>
-            <HeroImageContainer slidePage={slidePage * 100}>
-              <img src={hero} alt="hero"></img>
-              <img src={about_1} alt="hero"></img>
-              <img src={hero} alt="hero"></img>
-            </HeroImageContainer>
+    <Home>
+      <HeroContainer>
+        <HeroImage>
+          <HeroImageContainer slidePage={slidePage * 100}>
+            <img src={hero_1} alt="hero_1"></img>
+            <img src={hero_2} alt="hero_2"></img>
+            <img src={hero_3} alt="hero_3"></img>
+            <img src={hero_4} alt="hero_4"></img>
+          </HeroImageContainer>
 
-            <SliderButtons>
-              <ArrowButton direction={"left"} handleClick={handlePageMinus} />
-              <ArrowButton direction={"right"} handleClick={handlePagePlus} />
-            </SliderButtons>
-          </HeroImage>
-          <HeroContent>
-            <H1>Discover innovative way to play</H1>
-            <P>This is a website for you to choose your lovely toys. It’s not only funny but also healthy and safe. Pick it up for fun.</P>
-            <GoButton content={"SHOP NOW"} route={"shop"} />
-          </HeroContent>
-        </HeroContainer>
-      </Hero>
+          <SliderButtons>
+            <ArrowButton color={"#fff"} direction={"left"} handleClick={handlePageMinus} />
+            <ArrowButton color={"#fff"} direction={"right"} handleClick={handlePagePlus} />
+          </SliderButtons>
+        </HeroImage>
+        <HeroContent>
+          <H1>Discover innovative way to play</H1>
+          <P>This is a website for you to choose your lovely toys. It’s not only funny but also healthy and safe. Pick it up for fun.</P>
+          <GoButton content={"SHOP NOW"} route={"shop"} />
+        </HeroContent>
+      </HeroContainer>
 
-      <AboutSection>
-        <AboutImage></AboutImage>
-        <AboutDescription></AboutDescription>
-        <AboutImage></AboutImage>
-      </AboutSection>
-    </>
+      <About>
+        <AboutContainer>
+          <AboutImage>
+            <img src={about_1} alt="about_1"></img>
+          </AboutImage>
+          <AboutDescription>
+            <H3>ABOUT OUT STORE</H3>
+            <H3>This is a website for you to choose your lovely toys. It’s not only funny but also healthy and safe.
+Pick it up for fun.</H3>
+          </AboutDescription>
+          <AboutImage>
+            <img src={about_2} alt="about_2"></img>
+          </AboutImage>
+        </AboutContainer>
+      </About>
+      <Footer />
+    </Home>
   );
 }
 
