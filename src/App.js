@@ -8,7 +8,6 @@ import LoginPage from './page/LoginPage';
 import SignupPage from './page/SignupPage';
 import ShopPage from './page/ShopPage';
 
-
 function App() {
 
   return (
