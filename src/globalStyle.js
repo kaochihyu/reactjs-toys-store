@@ -31,7 +31,7 @@ const GlobalStyle = createGlobalStyle`
   h6,
   p {
     white-space: pre-line;
-    word-break: break-all;
+    word-break: break-word;
     line-height: 1.18;
     margin: 0;
     padding: 0;
@@ -40,6 +40,12 @@ const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
     color: inherit;
+  }
+
+  button {
+    border: none;
+    background-color: transparent;
+    padding: 0;
   }
 `;
 
