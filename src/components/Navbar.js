@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { GrShop } from 'react-icons/gr';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { Container } from './Container';
@@ -8,11 +8,24 @@ import { H3 } from './Text';
 import { CloseButton } from './Button';
 
 const Nav = styled(Container)`
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 90rem;
+  height: 9.375rem;
   padding-top: 3.75rem;
   padding-bottom: 3.75rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 1;
+  transition: 0.2s ease-in;
+ 
+  &.scroll {
+    background-color: white;
+  }
 `;
 
 const MobileMenuIcon = styled(AiOutlineMenu)`
@@ -92,14 +105,28 @@ const NavShopIcon = styled(GrShop)`
 `;
 
 function Navbar() {
+  const [scroll, setScroll] = useState(false);
   const [click, setClick] = useState(false);
+  let location = useLocation()
+
+  if (location.pathname === '/login' || location.pathname === '/signup') {
+    return null
+  }
+
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 0) {
+      setScroll(true)
+    } else {
+      setScroll(false)
+    }
+  })
 
   const handleClick = () => {
     setClick(!click);
   };
 
   return (
-    <Nav>
+    <Nav className={scroll ? 'scroll' : ''}>
       <MobileMenuIcon size={30} onClick={handleClick} />
       <MobileNavLogo>
         <Link to="/">TOYS</Link>
@@ -107,14 +134,17 @@ function Navbar() {
       <MobileNavItems className={click ? 'open' : 'close'}>
         <MobileNavItemsContainer>
           <CloseButton handleClick={handleClick} />
-          <NavItem>
+          <NavItem onClick={() => setClick(false)}>
             <Link to="/">Home</Link>
           </NavItem>
-          <NavItem>
-            <Link to="shop">Shop</Link>
+          <NavItem onClick={() => setClick(false)}>
+            <Link to="/shop">Shop</Link>
           </NavItem>
-          <NavItem>
-            <Link to="login">Login</Link>
+          <NavItem onClick={() => setClick(false)}>
+            <Link to="/login">Login</Link>
+          </NavItem>
+          <NavItem onClick={() => setClick(false)}>
+            <Link to="/signup">Signup</Link>
           </NavItem>
         </MobileNavItemsContainer>
       </MobileNavItems>
@@ -127,13 +157,16 @@ function Navbar() {
           <Link to="/">Home</Link>
         </NavItem>
         <NavItem>
-          <Link to="shop">Shop</Link>
+          <Link to="/shop">Shop</Link>
         </NavItem>
         <NavItem>
-          <Link to="login">Login</Link>
+          <Link to="/login">Login</Link>
+        </NavItem>
+        <NavItem>
+          <Link to="/signup">Signup</Link>
         </NavItem>
       </NavItems>
-      <Link to="cart">
+      <Link to="/cart">
         <NavShopIcon size={30} />
       </Link>
     </Nav>

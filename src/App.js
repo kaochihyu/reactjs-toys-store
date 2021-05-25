@@ -4,6 +4,10 @@ import GlobalStyle from './globalStyle';
 import Theme from './Theme';
 import Navbar from './components/Navbar';
 import HomePage from './page/HomePage';
+import LoginPage from './page/LoginPage';
+import SignupPage from './page/SignupPage';
+import ShopPage from './page/ShopPage';
+
 
 function App() {
 
@@ -14,8 +18,17 @@ function App() {
         <Router>
           <Navbar />
           <Switch>
-            <Route path="/">
+            <Route exact path="/">
               <HomePage />
+            </Route>
+            <Route exact path="/login">
+              <LoginPage />
+            </Route>
+            <Route exact path="/signup">
+              <SignupPage />
+            </Route>
+            <Route exact path="/shop">
+              <ShopPage />
             </Route>
           </Switch>
         </Router>

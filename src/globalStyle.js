@@ -5,7 +5,7 @@ const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Patua+One&display=swap');
   *,
   *::before, 
-  *::aftet {
+  *::after {
     box-sizing: border-box;
   }
 
@@ -46,6 +46,23 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     background-color: transparent;
     padding: 0;
+    font-family: 'Work Sans', sans-serif;
+  }
+
+  label {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+    font-weight: 700;
+  }
+
+  input {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+    background-color: transparent;
+    border-style: initial;
+    padding: 0.25rem;
+
+    &:focus-visible {
+      outline: none;
+    }
   }
 `;
 
