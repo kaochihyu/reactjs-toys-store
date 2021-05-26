@@ -1,48 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Container } from '../components/Container';
-import { Search } from '../components/Search';
+import { SearchBar } from '../components/Search';
 import { H2, H3, P } from '../components/Text';
+import { GoButton, GoToTopButton } from '../components/Button';
+import { Footer } from '../components/Footer';
 import item_1 from '../image/item.png';
 
-const PageContainer = styled.div`
-  width: 100%;
-  max-width: 90rem;
+const PageContainer = styled(Container)`
   position: absolute;
-  top: 9.375rem;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 9.5rem;
+  padding: 0;
 `;
 
-const SearchBar = styled(Container)`
-  display: flex;
-  justify-content: flex-end;
-  padding-top: ${({ theme }) => theme.space.sm};
-  padding-bottom: ${({ theme }) => theme.space.sm};
-
-  ${({ theme }) => theme.media.md} {
-    justify-content: center;
-  }
-`;
-
-const Items = styled(Container)`
+const Items = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  padding-top: ${({ theme }) => theme.space.md};
-  padding-bottom: ${({ theme }) => theme.space.md};
+  padding: ${({ theme }) => theme.space.md} 5rem;
 
   ${({ theme }) => theme.media.sm} {
     flex-direction: column;
+    flex-wrap: initial;
+    padding: ${({ theme }) => theme.space.md} 2.5rem;
   }
 `;
 
 const Item = styled.div`
-`;
-
-const ItemContainer = styled.div`
-
   > img {
     width: 100%;
     height: 16.25rem;
@@ -50,12 +35,15 @@ const ItemContainer = styled.div`
 `;
 
 const ItemContent = styled.div`
-  padding: ${({ theme }) => theme.space.md} 0;
+  padding: ${({ theme }) => theme.space.sm} 0;
+
+  > p {
+    color: ${({ theme }) => theme.colors.lightGray};
+  }
 
   > * ~ * {
     margin-top: 0.625rem;
   }
-
 `;
 
 const Blank = styled.div`
@@ -63,85 +51,67 @@ const Blank = styled.div`
   display: block;
 `;
 
+const itemDatas = [
+  {
+    id: 1,
+    name: 'Toys Car',
+    tag: '3-5 year',
+    price: '100',
+    src: item_1,
+  },
+  {
+    id: 2,
+    name: 'Toys Car',
+    tag: '3-5 year',
+    price: '100',
+    src: item_1,
+  },
+  {
+    id: 3,
+    name: 'Toys Car',
+    tag: '3-5 year',
+    price: '100',
+    src: item_1,
+  },
+  {
+    id: 4,
+    name: 'Toys Car',
+    tag: '3-5 year',
+    price: '100',
+    src: item_1,
+  },
+];
+
 function ShopPage() {
   return (
-    <PageContainer>
-      <SearchBar>
-        <Search />
-      </SearchBar>
-      <Items>
-        <Item>
-          <ItemContainer>
-            <img src={item_1} alt={"item_img"} />
-            <ItemContent>
-              <H3>Toy Car</H3>
-              <P>3 - 5 year</P>
-              <H2>$100</H2>
-              <button>See More</button>
-            </ItemContent>
-          </ItemContainer>
-        </Item>
-        <Item>
-          <ItemContainer>
-            <img src={item_1} alt={"item_img"} />
-            <ItemContent>
-              <H3>Toy Car</H3>
-              <P>3 - 5 year</P>
-              <H2>$100</H2>
-              <button>See More</button>
-            </ItemContent>
-          </ItemContainer>
-        </Item>
-        <Item>
-          <ItemContainer>
-            <img src={item_1} alt={"item_img"} />
-            <ItemContent>
-              <H3>Toy Car</H3>
-              <P>3 - 5 year</P>
-              <H2>$100</H2>
-              <button>See More</button>
-            </ItemContent>
-          </ItemContainer>
-        </Item>
-        <Item>
-          <ItemContainer>
-            <img src={item_1} alt={"item_img"} />
-            <ItemContent>
-              <H3>Toy Car</H3>
-              <P>3 - 5 year</P>
-              <H2>$100</H2>
-              <button>See More</button>
-            </ItemContent>
-          </ItemContainer>
-        </Item>
-        <Item>
-          <ItemContainer>
-            <img src={item_1} alt={"item_img"} />
-            <ItemContent>
-              <H3>Toy Car</H3>
-              <P>3 - 5 year</P>
-              <H2>$100</H2>
-              <button>See More</button>
-            </ItemContent>
-          </ItemContainer>
-        </Item>
-        <Item>
-          <ItemContainer>
-            <img src={item_1} alt={"item_img"} />
-            <ItemContent>
-              <H3>Toy Car</H3>
-              <P>3 - 5 year</P>
-              <H2>$100</H2>
-              <button>See More</button>
-            </ItemContent>
-          </ItemContainer>
-        </Item>
-        <Blank />
-        <Blank />
-        <Blank />
-      </Items>
-    </PageContainer>
-  )
+    <>
+      <SearchBar />
+      <PageContainer>
+        <Items>
+          {itemDatas.map((data) => (
+            <Item key={data.id}>
+              <img src={data.src} alt={data.name} />
+              <ItemContent>
+                <H3>{data.name}</H3>
+                <P>{data.tag}</P>
+                <H2>${data.price}</H2>
+                <GoButton
+                  content={'SEE MORE'}
+                  route={'/item'}
+                  letter_sp={'small'}
+                />
+              </ItemContent>
+            </Item>
+          ))}
+          <Blank />
+          <Blank />
+          <Blank />
+        </Items>
+        <Footer />
+      </PageContainer>
+      <GoToTopButton />
+    </>
+  );
 }
 
 export default ShopPage;

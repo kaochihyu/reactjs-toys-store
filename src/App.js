@@ -7,9 +7,9 @@ import HomePage from './page/HomePage';
 import LoginPage from './page/LoginPage';
 import SignupPage from './page/SignupPage';
 import ShopPage from './page/ShopPage';
+import ItemPage from './page/ItemPage';
 
 function App() {
-
   return (
     <>
       <Theme>
@@ -28,6 +28,9 @@ function App() {
             </Route>
             <Route exact path="/shop">
               <ShopPage />
+            </Route>
+            <Route exact path="/item">
+              <ItemPage />
             </Route>
           </Switch>
         </Router>

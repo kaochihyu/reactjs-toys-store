@@ -10,19 +10,15 @@ import { CloseButton } from './Button';
 const Nav = styled(Container)`
   position: fixed;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 90rem;
-  height: 9.375rem;
-  padding-top: 3.75rem;
-  padding-bottom: 3.75rem;
+  height: 5rem;
+  padding-top: ${({ theme }) => theme.space.sm};
+  padding-bottom: ${({ theme }) => theme.space.sm};
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 1;
-  transition: 0.2s ease-in;
- 
+  transition: 0.1s ease-in;
+
   &.scroll {
     background-color: white;
   }
@@ -107,19 +103,19 @@ const NavShopIcon = styled(GrShop)`
 function Navbar() {
   const [scroll, setScroll] = useState(false);
   const [click, setClick] = useState(false);
-  let location = useLocation()
+  let location = useLocation();
 
   if (location.pathname === '/login' || location.pathname === '/signup') {
-    return null
+    return null;
   }
 
   window.addEventListener('scroll', () => {
     if (window.pageYOffset > 0) {
-      setScroll(true)
+      setScroll(true);
     } else {
-      setScroll(false)
+      setScroll(false);
     }
-  })
+  });
 
   const handleClick = () => {
     setClick(!click);
