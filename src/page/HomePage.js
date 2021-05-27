@@ -6,10 +6,9 @@ import hero_3 from '../image/hero_3.png';
 import hero_4 from '../image/hero_4.png';
 import about_1 from '../image/about_1.jpg';
 import about_2 from '../image/about_2.jpg';
-import { H1, H3, P } from '../components/Text'
+import { H1, H3, P } from '../components/Text';
 import { GoButton, ArrowButton } from '../components/Button';
 import { Footer } from '../components/Footer';
-
 
 const Home = styled.div`
   position: absolute;
@@ -26,7 +25,7 @@ const HeroContainer = styled.div`
   display: grid;
   grid-template-columns: 56% 44%;
   grid-template-rows: 100%;
-  grid-template-areas: "hero_image hero_description";
+  grid-template-areas: 'hero_image hero_description';
 
   ${({ theme }) => theme.media.md} {
     height: initial;
@@ -49,8 +48,8 @@ const HeroImage = styled.div`
 const HeroImageContainer = styled.div`
   width: auto;
   height: 100%;
-  white-space: nowrap; 
-  transform: translateX(-${props => props.slidePage}%);
+  white-space: nowrap;
+  transform: translateX(-${(props) => props.slidePage}%);
   transition: 0.5s ease-in-out;
 
   > img {
@@ -73,10 +72,13 @@ const HeroContent = styled.div`
   padding: 9.375rem 6.25rem 0 6.25rem;
   grid-area: hero_description;
 
-  > ${P} {
+  > H1 {
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+  }
+
+  > P {
     color: ${({ theme }) => theme.colors.lightGray};
     text-align: justify;
-    line-height: 1.4em;
   }
 
   > * ~ * {
@@ -146,22 +148,21 @@ const AboutDescription = styled.div`
 `;
 
 function HomePage() {
-  const [slidePage, setSlidePage] = useState(0)
+  const [slidePage, setSlidePage] = useState(0);
 
   const handlePageMinus = () => {
-    setSlidePage(slidePage - 1)
+    setSlidePage(slidePage - 1);
     if (slidePage < 1) {
-      setSlidePage(3)
+      setSlidePage(3);
     }
-  }
+  };
 
   const handlePagePlus = () => {
-    setSlidePage(slidePage + 1)
+    setSlidePage(slidePage + 1);
     if (slidePage > 2) {
-      setSlidePage(0)
+      setSlidePage(0);
     }
-  }
-
+  };
 
   return (
     <Home>
@@ -175,14 +176,25 @@ function HomePage() {
           </HeroImageContainer>
 
           <SliderButtons>
-            <ArrowButton color={"#fff"} direction={"left"} handleClick={handlePageMinus} />
-            <ArrowButton color={"#fff"} direction={"right"} handleClick={handlePagePlus} />
+            <ArrowButton
+              color={'#fff'}
+              direction={'left'}
+              handleClick={handlePageMinus}
+            />
+            <ArrowButton
+              color={'#fff'}
+              direction={'right'}
+              handleClick={handlePagePlus}
+            />
           </SliderButtons>
         </HeroImage>
         <HeroContent>
           <H1>Discover innovative way to play</H1>
-          <P>This is a website for you to choose your lovely toys. It’s not only funny but also healthy and safe. Pick it up for fun.</P>
-          <GoButton content={"SHOP NOW"} route={"shop"} />
+          <P>
+            This is a website for you to choose your lovely toys. It’s not only
+            funny but also healthy and safe. Pick it up for fun.
+          </P>
+          <GoButton content={'SHOP NOW'} route={'shop'} />
         </HeroContent>
       </HeroContainer>
 
@@ -193,8 +205,10 @@ function HomePage() {
           </AboutImage>
           <AboutDescription>
             <H3>ABOUT OUT STORE</H3>
-            <H3>This is a website for you to choose your lovely toys. It’s not only funny but also healthy and safe.
-Pick it up for fun.</H3>
+            <H3>
+              This is a website for you to choose your lovely toys. It’s not
+              only funny but also healthy and safe. Pick it up for fun.
+            </H3>
           </AboutDescription>
           <AboutImage>
             <img src={about_2} alt="about_2"></img>

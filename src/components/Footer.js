@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { P } from './Text';
+import { H3 } from './Text';
 
 const FooterContainer = styled.footer`
   width: 100%;
   background-color: ${(props) => props.theme.colors.black};
   padding: 2.5rem 6.25rem;
 
-  > ${P} {
+  > H3 {
     color: ${(props) => props.theme.colors.gray};
     margin-top: 6.75rem;
     padding-top: 1rem;
@@ -19,7 +19,7 @@ const FooterContainer = styled.footer`
   ${({ theme }) => theme.media.md} {
     padding: 3.75rem 2.5rem;
 
-    > ${P} {
+    > H3 {
       text-align: center;
     }
   }
@@ -35,12 +35,12 @@ const ItemsContainer = styled.div`
     align-items: center;
     gap: 1.875rem;
   }
-`
+`;
 
 const Items = styled.div`
   display: flex;
   gap: 2.5rem;
-  
+
   ${({ theme }) => theme.media.md} {
     flex-direction: column;
     align-items: center;
@@ -49,12 +49,11 @@ const Items = styled.div`
   }
 `;
 
-const Item = styled(P)`
+const Item = styled(H3)`
   color: ${(props) => props.theme.colors.gray};
 `;
 
 export const Footer = () => {
-
   return (
     <FooterContainer>
       <ItemsContainer>
@@ -79,8 +78,7 @@ export const Footer = () => {
           </Item>
         </Items>
       </ItemsContainer>
-      <P>Copyright © 2021 Toys</P>
+      <H3>Copyright © 2021 Toys</H3>
     </FooterContainer>
   );
-}
-
+};

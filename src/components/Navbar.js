@@ -16,7 +16,7 @@ const Nav = styled(Container)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 1;
+  z-index: 2;
   transition: 0.1s ease-in;
 
   &.scroll {
@@ -86,7 +86,7 @@ const NavItems = styled.div`
 `;
 
 const NavLogo = styled.div`
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-family: 'Patua One', cursive;
 `;
 
@@ -163,7 +163,7 @@ function Navbar() {
         </NavItem>
       </NavItems>
       <Link to="/cart">
-        <NavShopIcon size={30} />
+        <NavShopIcon size={22} />
       </Link>
     </Nav>
   );

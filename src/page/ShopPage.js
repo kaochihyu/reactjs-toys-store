@@ -18,19 +18,19 @@ const Items = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  padding: ${({ theme }) => theme.space.md} 5rem;
+  gap: 2.5rem;
+  padding: ${({ theme }) => theme.space.sm} ${({ theme }) => theme.space.lg};
 
   ${({ theme }) => theme.media.sm} {
     flex-direction: column;
     flex-wrap: initial;
-    padding: ${({ theme }) => theme.space.md} 2.5rem;
+    padding: ${({ theme }) => theme.space.sm} ${({ theme }) => theme.space.md};
   }
 `;
 
 const Item = styled.div`
   > img {
-    width: 100%;
-    height: 16.25rem;
+    width: 12.5rem;
   }
 `;
 
@@ -47,7 +47,7 @@ const ItemContent = styled.div`
 `;
 
 const Blank = styled.div`
-  width: 16.25rem;
+  width: 12.5rem;
   display: block;
 `;
 
@@ -80,6 +80,27 @@ const itemDatas = [
     price: '100',
     src: item_1,
   },
+  {
+    id: 5,
+    name: 'Toys Car',
+    tag: '3-5 year',
+    price: '100',
+    src: item_1,
+  },
+  {
+    id: 6,
+    name: 'Toys Car',
+    tag: '3-5 year',
+    price: '100',
+    src: item_1,
+  },
+  {
+    id: 7,
+    name: 'Toys Car',
+    tag: '3-5 year',
+    price: '100',
+    src: item_1,
+  },
 ];
 
 function ShopPage() {
@@ -103,6 +124,7 @@ function ShopPage() {
               </ItemContent>
             </Item>
           ))}
+          <Blank />
           <Blank />
           <Blank />
           <Blank />

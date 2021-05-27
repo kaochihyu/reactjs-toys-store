@@ -8,6 +8,8 @@ import LoginPage from './page/LoginPage';
 import SignupPage from './page/SignupPage';
 import ShopPage from './page/ShopPage';
 import ItemPage from './page/ItemPage';
+import CartPage from './page/CartPage';
+import MsPage from './page/MsPage';
 
 function App() {
   return (
@@ -31,6 +33,12 @@ function App() {
             </Route>
             <Route exact path="/item">
               <ItemPage />
+            </Route>
+            <Route exact path="/cart">
+              <CartPage />
+            </Route>
+            <Route exact path="/ms">
+              <MsPage />
             </Route>
           </Switch>
         </Router>

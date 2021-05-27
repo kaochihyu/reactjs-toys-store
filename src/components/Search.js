@@ -14,7 +14,7 @@ const StyledSearch = styled.div`
 const StyledSearchBar = styled(Container)`
   position: fixed;
   top: 80px;
-  z-index: 2;
+  z-index: 1;
   display: flex;
   justify-content: flex-end;
   padding-top: ${({ theme }) => theme.space.sm};
@@ -30,7 +30,7 @@ export const Search = () => {
   return (
     <StyledSearch>
       <input placeholder="Search..." />
-      <AiOutlineSearch size={30} />
+      <AiOutlineSearch size={24} />
     </StyledSearch>
   );
 };
