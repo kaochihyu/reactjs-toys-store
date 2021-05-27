@@ -120,7 +120,7 @@ function MsPage() {
       <PageContainer>
         <ItemsList>
           {itemDatas.map((data) => (
-            <Item>
+            <Item key={data.id}>
               <ItemImage>
                 <img src={data.src} alt={data.name} />
               </ItemImage>
