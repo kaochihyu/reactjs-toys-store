@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Container } from '../components/Container';
 import { H1, H3 } from '../components/Text';
 import { Count } from '../components/Count';
+import { ActionButton } from '../components/Button';
 import { Footer } from '../components/Footer';
 import item_1 from '../image/item.png';
 
@@ -33,6 +34,7 @@ const Item = styled.div`
 
   ${({ theme }) => theme.media.md} {
     flex-direction: column;
+    align-items: center;
     width: 100%;
   }
 
@@ -43,6 +45,7 @@ const Item = styled.div`
 
 const ItemContent = styled.div`
   flex: 1;
+  width: 100%;
 
   > ${H3} {
     color: ${({ theme }) => theme.colors.lightGray};
@@ -50,6 +53,16 @@ const ItemContent = styled.div`
 
   > * ~ * {
     margin-top: ${({ theme }) => theme.space.md};
+  }
+`;
+
+const Buttons = styled.div`
+  display: flex;
+  gap: 20px;
+  margin-top: 3.75rem;
+  ${({ theme }) => theme.media.sm} {
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
@@ -68,21 +81,23 @@ const data = [
 
 function ShopPage() {
   return (
-    <>
-      <PageContainer>
-        <Item>
-          <img src={data[0].src} alt={'item_1'}></img>
-          <ItemContent>
-            <H1>{data[0].name}</H1>
-            <H3>{data[0].tag}</H3>
-            <H3>{data[0].description}</H3>
-            <H1>${data[0].price}</H1>
-            <Count />
-          </ItemContent>
-        </Item>
-        <Footer />
-      </PageContainer>
-    </>
+    <PageContainer>
+      <Item>
+        <img src={data[0].src} alt={'item_1'}></img>
+        <ItemContent>
+          <H1>{data[0].name}</H1>
+          <H3>{data[0].tag}</H3>
+          <H3>{data[0].description}</H3>
+          <H1>${data[0].price}</H1>
+          <Count />
+          <Buttons>
+            <ActionButton content={'Add to Cart'} color={'primary'} />
+            <ActionButton content={'Buy Now'} color={'secondary'} />
+          </Buttons>
+        </ItemContent>
+      </Item>
+      <Footer />
+    </PageContainer>
   );
 }
 

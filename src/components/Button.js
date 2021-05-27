@@ -8,7 +8,7 @@ import {
   RiArrowUpSLine,
 } from 'react-icons/ri';
 import { GrClose } from 'react-icons/gr';
-import { H2, H3 } from './Text';
+import { H3 } from './Text';
 
 const Button = styled.button`
   display: flex;
@@ -58,17 +58,25 @@ const StyledCloseButton = styled(Button)`
 `;
 
 const StyledActionButton = styled(Button)`
-  width: 16.25rem;
-  padding: 1rem;
-  background-color: ${(props) => (props.color === 'primary' ? '#fff' : '#000')};
+  width: 10rem;
+  padding: 0.5rem 1rem;
+  color: ${(props) => (props.color === 'primary' ? '#fff' : '#000')};
   background-color: ${(props) => (props.color === 'primary' ? '#000' : '#fff')};
+  border: 1px solid #000;
 `;
 
 const StyledGoToTopButton = styled(StyledArrowButton)`
   position: fixed;
   right: 0;
   bottom: 0;
+
+  ${({ theme }) => theme.media.sm} {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
 `;
+
+const StyledDeleteButton = styled(Button)``;
 
 export const GoButton = ({ content, route, letter_sp }) => {
   return (
@@ -102,7 +110,7 @@ export const CloseButton = ({ handleClick }) => {
 export const ActionButton = ({ color, content }) => {
   return (
     <StyledActionButton color={color}>
-      <H2>{content}</H2>
+      <H3>{content}</H3>
     </StyledActionButton>
   );
 };
@@ -116,5 +124,13 @@ export const GoToTopButton = () => {
     <StyledGoToTopButton bgColor={'black'} onClick={handleToTop}>
       <RiArrowUpSLine size={'3rem'} color={'#fff'} />
     </StyledGoToTopButton>
+  );
+};
+
+export const DeleteButton = () => {
+  return (
+    <StyledDeleteButton>
+      <GrClose size={22} />
+    </StyledDeleteButton>
   );
 };
