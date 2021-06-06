@@ -71,11 +71,32 @@ const ItemContent = styled.div`
   justify-content: space-between;
   align-items: center;
 
+  > p {
+    text-align: left;
+  }
+
+  > p:nth-child(2) {
+    width: 20%;
+  }
+
+  > p:nth-child(3) {
+    width: 10%;
+  }
+
+  > p:nth-child(1),
+  p:nth-child(4) {
+    width: 8%;
+  }
+
   ${({ theme }) => theme.media.md} {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.625rem;
     padding: 10px;
+
+    > p {
+      width: initial;
+    }
   }
 `;
 
