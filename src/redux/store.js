@@ -7,4 +7,4 @@ export default configureStore({
     item: itemReducer,
     user: userReducer,
   },
-})
+});

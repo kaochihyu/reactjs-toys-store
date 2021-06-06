@@ -17,16 +17,16 @@ import { getAuthToken } from './utils';
 import { getUser } from './redux/reducer/userSlice';
 
 function App() {
-  const token = getAuthToken()
+  const token = getAuthToken();
   const dispatch = useDispatch();
-  const user = useSelector((store) => store.user.user)
-  const isLoadingUser = useSelector((store) => store.user.isLoadingUser)
+  const user = useSelector((store) => store.user.user);
+  const isLoadingUser = useSelector((store) => store.user.isLoadingUser);
 
   useEffect(() => {
     if (token) {
-      dispatch(getUser())
+      dispatch(getUser());
     }
-  }, [token, dispatch])
+  }, [token, dispatch]);
   return (
     <>
       <Theme>

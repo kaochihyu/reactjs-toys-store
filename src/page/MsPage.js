@@ -3,7 +3,11 @@ import styled from 'styled-components';
 import { useHistory, Link } from 'react-router-dom';
 import { Container } from '../components/Container';
 import { P } from '../components/Text';
-import { ActionButton, AddItemButton, GoToTopButton } from '../components/Button';
+import {
+  ActionButton,
+  AddItemButton,
+  GoToTopButton,
+} from '../components/Button';
 import { Search } from '../components/Search';
 import { useDispatch, useSelector } from 'react-redux';
 import { getItem, getItems, deleteItem } from '../redux/reducer/itemSlice';
@@ -117,10 +121,10 @@ function MsPage() {
   const history = useHistory();
   const dispatch = useDispatch();
   const items = useSelector((store) => store.item.items);
-  const user = useSelector((store) => store.user.user)
+  const user = useSelector((store) => store.user.user);
 
   if (user && user.username !== 'admin') {
-    history.push('/')
+    history.push('/');
   }
 
   useEffect(() => {
@@ -132,13 +136,12 @@ function MsPage() {
   const handleDelete = (e) => {
     e.preventDefault();
     const id = e.target.attributes.getNamedItem('data-id').value;
-    dispatch(deleteItem(id)).then(() => history.go(0))
+    dispatch(deleteItem(id)).then(() => history.go(0));
   };
 
   const handelEdit = (e) => {
     const id = e.target.attributes.getNamedItem('data-id').value;
-    history.push(`editItem/${id}`)
-
+    history.push(`editItem/${id}`);
   };
 
   return (

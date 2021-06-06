@@ -108,7 +108,7 @@ const NavShopIcon = styled(GrShop)`
 function Navbar() {
   const location = useLocation();
   const history = useHistory();
-  const match = useRouteMatch('/editItem/:id')
+  const match = useRouteMatch('/editItem/:id');
   const [scroll, setScroll] = useState(false);
   const [click, setClick] = useState(false);
   const dispatch = useDispatch();

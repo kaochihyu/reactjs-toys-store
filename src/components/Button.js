@@ -90,7 +90,7 @@ export const AddItemButton = styled(H3)`
 
 export const FlexWrapper = styled.div`
   display: flex;
-  justify-content: ${props => props.center ? 'center' : 'initial'};
+  justify-content: ${(props) => (props.center ? 'center' : 'initial')};
   gap: 1rem;
   width: 100%;
   margin-top: 3.75rem;
@@ -99,8 +99,6 @@ export const FlexWrapper = styled.div`
     align-items: center;
   }
 `;
-
-
 
 const StyledDeleteButton = styled(Button)``;
 

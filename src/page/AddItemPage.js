@@ -44,19 +44,19 @@ function AddItemPage() {
   const [price, setPrice] = useState('');
   const [warning, setWarning] = useState();
   const dispatch = useDispatch();
-  const user = useSelector((store) => store.user.user)
+  const user = useSelector((store) => store.user.user);
 
   if (user && user.username !== 'admin') {
-    history.push('/')
+    history.push('/');
   }
 
   const handleCancel = (e) => {
-    e.preventDefault()
-    history.push('/ms')
-  }
+    e.preventDefault();
+    history.push('/ms');
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (
       !itemName ||
       !description ||
@@ -68,17 +68,10 @@ function AddItemPage() {
       setWarning('Something missed');
     } else {
       dispatch(
-        addItem(
-          itemName,
-          description,
-          itemTag,
-          picture,
-          quantity,
-          price
-        )
+        addItem(itemName, description, itemTag, picture, quantity, price)
       ).then(() => {
-        history.push('/ms')
-      })
+        history.push('/ms');
+      });
     }
   };
 
@@ -165,7 +158,11 @@ function AddItemPage() {
         {warning && <AlertText>{warning}</AlertText>}
 
         <FlexWrapper center>
-          <ActionButton color={'secondary'} content={'Cnacel'} onClick={handleCancel} />
+          <ActionButton
+            color={'secondary'}
+            content={'Cnacel'}
+            onClick={handleCancel}
+          />
           <ActionButton
             color={'primary'}
             content={'Save'}

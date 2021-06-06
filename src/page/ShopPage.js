@@ -57,8 +57,8 @@ function ShopPage() {
   const items = useSelector((store) => store.item.items);
 
   useEffect(() => {
-    dispatch(getItems())
-  }, [dispatch])
+    dispatch(getItems());
+  }, [dispatch]);
 
   if (!items) return null;
 

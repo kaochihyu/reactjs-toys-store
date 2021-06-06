@@ -18,11 +18,10 @@ export const registerAPI = (username, password, nickname) => {
     body: JSON.stringify({
       username,
       password,
-      nickname
+      nickname,
     }),
-  }).then((res) => res.json())
+  }).then((res) => res.json());
 };
-
 
 export const loginAPI = (username, password) => {
   return fetch(`${BASE_URL}/login`, {
@@ -34,19 +33,26 @@ export const loginAPI = (username, password) => {
       username,
       password,
     }),
-  }).then((res) => res.json())
+  }).then((res) => res.json());
 };
 
 export const getMeAPI = () => {
   const token = getAuthToken();
   return fetch(`${BASE_URL}/me`, {
     headers: {
-      'authorization': `Bearer ${token}`,
+      authorization: `Bearer ${token}`,
     },
-  }).then((res) => res.json())
+  }).then((res) => res.json());
 };
 
-export const addItemAPI = (name, description, tag, picture, quantity, price) => {
+export const addItemAPI = (
+  name,
+  description,
+  tag,
+  picture,
+  quantity,
+  price
+) => {
   return fetch(`${BASE_URL}/items`, {
     method: 'POST',
     headers: {
@@ -58,10 +64,10 @@ export const addItemAPI = (name, description, tag, picture, quantity, price) => 
       tag,
       picture,
       quantity,
-      price
+      price,
     }),
-  }).then((res) => res.json())
-}
+  }).then((res) => res.json());
+};
 
 export const deleteItemAPI = (id) => {
   return fetch(`${BASE_URL}/items/${id}`, {
@@ -69,10 +75,18 @@ export const deleteItemAPI = (id) => {
     headers: {
       'content-type': 'application/json',
     },
-  }).then((res) => res.json())
-}
+  }).then((res) => res.json());
+};
 
-export const updateItemAPI = (id, name, description, tag, picture, quantity, price) => {
+export const updateItemAPI = (
+  id,
+  name,
+  description,
+  tag,
+  picture,
+  quantity,
+  price
+) => {
   return fetch(`${BASE_URL}/items/${id}`, {
     method: 'PATCH',
     headers: {
@@ -84,7 +98,7 @@ export const updateItemAPI = (id, name, description, tag, picture, quantity, pri
       tag,
       picture,
       quantity,
-      price
-    })
-  }).then((res) => res.json())
-}
+      price,
+    }),
+  }).then((res) => res.json());
+};

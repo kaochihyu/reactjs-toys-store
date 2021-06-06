@@ -123,11 +123,11 @@ const itemDatas = [
 ];
 
 function CartPage() {
-  const user = useSelector(store => store.user.user)
+  const user = useSelector((store) => store.user.user);
 
   return (
     <PageContainer>
-      {user ? (<H1>{user.nickname}'s Cart</H1>):(<H1>My Cart</H1>)}
+      {user ? <H1>{user.nickname}'s Cart</H1> : <H1>My Cart</H1>}
 
       <CartList>
         {itemDatas.map((data) => (

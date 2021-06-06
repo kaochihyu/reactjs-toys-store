@@ -48,19 +48,19 @@ function EditItemPage() {
   const [errorMessage, setErrorMessage] = useState();
 
   useEffect(() => {
-    dispatch(getItem(id))
-  }, [id, dispatch])
+    dispatch(getItem(id));
+  }, [id, dispatch]);
 
-  console.log(id)
+  console.log(id);
 
   if (!item) {
-    console.log("no item")
+    console.log('no item');
   } else {
-    console.log("item")
+    console.log('item');
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (
       !itemName ||
       !description ||
@@ -72,19 +72,10 @@ function EditItemPage() {
       setErrorMessage('Something missed');
     } else {
       dispatch(
-        updateItem(
-          id,
-          itemName,
-          description,
-          itemTag,
-          picture,
-          quantity,
-          price
-        )
+        updateItem(id, itemName, description, itemTag, picture, quantity, price)
       ).then(() => {
-        history.push('/ms')
-      })
-
+        history.push('/ms');
+      });
     }
   };
 

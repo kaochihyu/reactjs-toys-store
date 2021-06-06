@@ -64,8 +64,8 @@ function ItemPage() {
   const item = useSelector((store) => store.item.item);
 
   useEffect(() => {
-    dispatch(getItem(id))
-  }, [id, dispatch])
+    dispatch(getItem(id));
+  }, [id, dispatch]);
 
   if (!item) return null;
 

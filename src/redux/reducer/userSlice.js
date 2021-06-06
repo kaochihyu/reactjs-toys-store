@@ -22,38 +22,35 @@ const userReducer = createSlice({
     setErrorMessage: (state, action) => {
       state.errorMessage = action.payload;
     },
-  }
-})
+  },
+});
 
-export const {
-  setIsLoadingUser,
-  setUser,
-  setErrorMessage
-} = userReducer.actions;
+export const { setIsLoadingUser, setUser, setErrorMessage } =
+  userReducer.actions;
 
-export const register = (username, password, nickname) => (dispatch) => registerAPI(username, password, nickname)
-  .then((resRegister) => {
+export const register = (username, password, nickname) => (dispatch) =>
+  registerAPI(username, password, nickname).then((resRegister) => {
     if (resRegister.status === 401) {
-      dispatch(setErrorMessage(resRegister.message))
+      dispatch(setErrorMessage(resRegister.message));
       return;
     }
     setAuthToken(resRegister.access_token);
     return getMeAPI().then((resMe) => {
-      console.log("me", resMe)
+      console.log('me', resMe);
       if (resMe.status === 401) {
         setAuthToken(null);
         dispatch(setErrorMessage(resMe.message));
         return;
       }
-      dispatch(setUser(resMe.data))
+      dispatch(setUser(resMe.data));
       return resMe;
-    })
-  })
+    });
+  });
 
-export const login = (username, password) => (dispatch) => loginAPI(username, password)
-  .then((resLogin) => {
+export const login = (username, password) => (dispatch) =>
+  loginAPI(username, password).then((resLogin) => {
     if (resLogin.status === 401) {
-      dispatch(setErrorMessage(resLogin.message))
+      dispatch(setErrorMessage(resLogin.message));
       return;
     }
     setAuthToken(resLogin.access_token);
@@ -63,11 +60,10 @@ export const login = (username, password) => (dispatch) => loginAPI(username, pa
         dispatch(setErrorMessage(resMe.message));
         return;
       }
-      dispatch(setUser(resMe.data))
+      dispatch(setUser(resMe.data));
       return resMe;
-    })
+    });
   });
-
 
 export const getUser = () => (dispatch) => {
   dispatch(setIsLoadingUser(true));
@@ -76,8 +72,7 @@ export const getUser = () => (dispatch) => {
       dispatch(setUser(res.data));
       dispatch(setIsLoadingUser(false));
     }
-  })
-}
+  });
+};
 
 export default userReducer.reducer;
-
