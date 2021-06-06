@@ -76,6 +76,32 @@ const StyledGoToTopButton = styled(StyledArrowButton)`
   }
 `;
 
+export const AddItemButton = styled(H3)`
+  padding: 0.625rem 1.5rem;
+  border: 0.125rem solid #000;
+  border-radius: 1.5rem;
+  transition: 0.2s ease-in-out;
+
+  &:hover {
+    color: #fff;
+    background-color: #000;
+  }
+`;
+
+export const FlexWrapper = styled.div`
+  display: flex;
+  justify-content: ${props => props.center ? 'center' : 'initial'};
+  gap: 1rem;
+  width: 100%;
+  margin-top: 3.75rem;
+  ${({ theme }) => theme.media.sm} {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+
+
 const StyledDeleteButton = styled(Button)``;
 
 export const GoButton = ({ content, route, letter_sp }) => {
@@ -107,10 +133,10 @@ export const CloseButton = ({ handleClick }) => {
   );
 };
 
-export const ActionButton = ({ color, content }) => {
+export const ActionButton = ({ color, content, onClick, data }) => {
   return (
-    <StyledActionButton color={color}>
-      <H3>{content}</H3>
+    <StyledActionButton color={color} onClick={onClick} data-id={data}>
+      <H3 data-id={data}>{content}</H3>
     </StyledActionButton>
   );
 };

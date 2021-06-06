@@ -5,7 +5,7 @@ import { Container } from '../components/Container';
 
 const StyledSearch = styled.div`
   display: flex;
-  justify-content: centent;
+  justify-content: center;
   align-items: center;
   width: 14.5rem;
   border-bottom: 0.125rem solid #000;

@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { GrShop } from 'react-icons/gr';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { Container } from './Container';
 import { H3 } from './Text';
 import { CloseButton } from './Button';
+import { setAuthToken } from '../utils';
+import { setUser } from '../redux/reducer/userSlice';
 
 const Nav = styled(Container)`
   position: fixed;
@@ -77,6 +80,7 @@ const MobileNavItemsContainer = styled.div`
 const NavItems = styled.div`
   display: flex;
   align-items: center;
+
   > H3 {
     margin-left: ${(props) => props.theme.space.md};
   }
@@ -92,6 +96,7 @@ const NavLogo = styled.div`
 
 const NavItem = styled(H3)`
   color: ${(props) => props.theme.colors.black};
+  cursor: pointer;
 `;
 
 const NavShopIcon = styled(GrShop)`
@@ -101,11 +106,25 @@ const NavShopIcon = styled(GrShop)`
 `;
 
 function Navbar() {
+  const location = useLocation();
+  const history = useHistory();
+  const match = useRouteMatch('/editItem/:id')
   const [scroll, setScroll] = useState(false);
   const [click, setClick] = useState(false);
-  let location = useLocation();
+  const dispatch = useDispatch();
+  const user = useSelector((store) => store.user.user);
+  let admin;
 
-  if (location.pathname === '/login' || location.pathname === '/signup') {
+  if (user && user.username === 'admin') {
+    admin = user.username;
+  }
+
+  if (
+    location.pathname === '/login' ||
+    location.pathname === '/signup' ||
+    location.pathname === '/addItem' ||
+    (match && match.path === '/editItem/:id')
+  ) {
     return null;
   }
 
@@ -119,6 +138,15 @@ function Navbar() {
 
   const handleClick = () => {
     setClick(!click);
+  };
+
+  const handleLogout = () => {
+    setAuthToken('');
+    dispatch(setUser(''));
+    if (location.pathname !== '/') {
+      history.push('/');
+    }
+    setClick(false);
   };
 
   return (
@@ -136,12 +164,22 @@ function Navbar() {
           <NavItem onClick={() => setClick(false)}>
             <Link to="/shop">Shop</Link>
           </NavItem>
-          <NavItem onClick={() => setClick(false)}>
-            <Link to="/login">Login</Link>
-          </NavItem>
-          <NavItem onClick={() => setClick(false)}>
-            <Link to="/signup">Signup</Link>
-          </NavItem>
+          {admin && (
+            <NavItem onClick={() => setClick(false)}>
+              <Link to="/ms">Management</Link>
+            </NavItem>
+          )}
+          {user && <NavItem onClick={handleLogout}>Logout</NavItem>}
+          {!user && (
+            <NavItem onClick={() => setClick(false)}>
+              <Link to="/login">Login</Link>
+            </NavItem>
+          )}
+          {!user && (
+            <NavItem onClick={() => setClick(false)}>
+              <Link to="/signup">Signup</Link>
+            </NavItem>
+          )}
         </MobileNavItemsContainer>
       </MobileNavItems>
 
@@ -155,12 +193,22 @@ function Navbar() {
         <NavItem>
           <Link to="/shop">Shop</Link>
         </NavItem>
-        <NavItem>
-          <Link to="/login">Login</Link>
-        </NavItem>
-        <NavItem>
-          <Link to="/signup">Signup</Link>
-        </NavItem>
+        {admin && (
+          <NavItem onClick={() => setClick(false)}>
+            <Link to="/ms">Management</Link>
+          </NavItem>
+        )}
+        {user && <NavItem onClick={handleLogout}>Logout</NavItem>}
+        {!user && (
+          <NavItem>
+            <Link to="/login">Login</Link>
+          </NavItem>
+        )}
+        {!user && (
+          <NavItem>
+            <Link to="/signup">Signup</Link>
+          </NavItem>
+        )}
       </NavItems>
       <Link to="/cart">
         <NavShopIcon size={22} />
