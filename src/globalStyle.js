@@ -52,6 +52,7 @@ const GlobalStyle = createGlobalStyle`
   label {
     font-size: ${({ theme }) => theme.fontSizes.sm};
     font-weight: 700;
+    white-space: nowrap;
   }
 
   input {

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 import { Container } from '../components/Container';
 import { H1, H3, P } from '../components/Text';
 import { Count } from '../components/Count';
@@ -122,9 +123,11 @@ const itemDatas = [
 ];
 
 function CartPage() {
+  const user = useSelector((store) => store.user.user);
+
   return (
     <PageContainer>
-      <H1>My Cart</H1>
+      {user ? <H1>{user.nickname}'s Cart</H1> : <H1>My Cart</H1>}
 
       <CartList>
         {itemDatas.map((data) => (

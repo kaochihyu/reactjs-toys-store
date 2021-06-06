@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Container } from '../components/Container';
 import { H1, H3 } from '../components/Text';
 import { Count } from '../components/Count';
-import { ActionButton } from '../components/Button';
+import { ActionButton, FlexWrapper } from '../components/Button';
 import { Footer } from '../components/Footer';
-import item_1 from '../image/item.png';
+import { getItem } from '../redux/reducer/itemSlice';
 
 const PageContainer = styled(Container)`
   position: absolute;
@@ -56,44 +58,31 @@ const ItemContent = styled.div`
   }
 `;
 
-const Buttons = styled.div`
-  display: flex;
-  gap: 20px;
-  margin-top: 3.75rem;
-  ${({ theme }) => theme.media.sm} {
-    flex-direction: column;
-    align-items: center;
-  }
-`;
+function ItemPage() {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const item = useSelector((store) => store.item.item);
 
-const data = [
-  {
-    id: 1,
-    name: 'Toys Car',
-    tag: '3-5 year',
-    price: '100',
-    src: item_1,
-    description:
-      'Push it, pull it and the car run. It can let child to be trained the arms muscles.',
-    stock: 4,
-  },
-];
+  useEffect(() => {
+    dispatch(getItem(id));
+  }, [id, dispatch]);
 
-function ShopPage() {
+  if (!item) return null;
+
   return (
     <PageContainer>
       <Item>
-        <img src={data[0].src} alt={'item_1'}></img>
+        <img src={item.picture} alt={item.name}></img>
         <ItemContent>
-          <H1>{data[0].name}</H1>
-          <H3>{data[0].tag}</H3>
-          <H3>{data[0].description}</H3>
-          <H1>${data[0].price}</H1>
+          <H1>{item.name}</H1>
+          <H3>{item.tag}</H3>
+          <H3>{item.description}</H3>
+          <H1>${item.price}</H1>
           <Count />
-          <Buttons>
+          <FlexWrapper>
             <ActionButton content={'Add to Cart'} color={'primary'} />
             <ActionButton content={'Buy Now'} color={'secondary'} />
-          </Buttons>
+          </FlexWrapper>
         </ItemContent>
       </Item>
       <Footer />
@@ -101,4 +90,4 @@ function ShopPage() {
   );
 }
 
-export default ShopPage;
+export default ItemPage;

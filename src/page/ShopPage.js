@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 import { Container } from '../components/Container';
 import { SearchBar } from '../components/Search';
 import { H2, H3, P } from '../components/Text';
 import { GoButton, GoToTopButton } from '../components/Button';
 import { Footer } from '../components/Footer';
-import item_1 from '../image/item.png';
+import { getItems } from '../redux/reducer/itemSlice';
 
 const PageContainer = styled(Container)`
   position: absolute;
@@ -51,74 +52,31 @@ const Blank = styled.div`
   display: block;
 `;
 
-const itemDatas = [
-  {
-    id: 1,
-    name: 'Toys Car',
-    tag: '3-5 year',
-    price: '100',
-    src: item_1,
-  },
-  {
-    id: 2,
-    name: 'Toys Car',
-    tag: '3-5 year',
-    price: '100',
-    src: item_1,
-  },
-  {
-    id: 3,
-    name: 'Toys Car',
-    tag: '3-5 year',
-    price: '100',
-    src: item_1,
-  },
-  {
-    id: 4,
-    name: 'Toys Car',
-    tag: '3-5 year',
-    price: '100',
-    src: item_1,
-  },
-  {
-    id: 5,
-    name: 'Toys Car',
-    tag: '3-5 year',
-    price: '100',
-    src: item_1,
-  },
-  {
-    id: 6,
-    name: 'Toys Car',
-    tag: '3-5 year',
-    price: '100',
-    src: item_1,
-  },
-  {
-    id: 7,
-    name: 'Toys Car',
-    tag: '3-5 year',
-    price: '100',
-    src: item_1,
-  },
-];
-
 function ShopPage() {
+  const dispatch = useDispatch();
+  const items = useSelector((store) => store.item.items);
+
+  useEffect(() => {
+    dispatch(getItems());
+  }, [dispatch]);
+
+  if (!items) return null;
+
   return (
     <>
       <SearchBar />
       <PageContainer>
         <Items>
-          {itemDatas.map((data) => (
+          {items.map((data) => (
             <Item key={data.id}>
-              <img src={data.src} alt={data.name} />
+              <img src={data.picture} alt={data.name} />
               <ItemContent>
                 <H3>{data.name}</H3>
                 <P>{data.tag}</P>
                 <H2>${data.price}</H2>
                 <GoButton
                   content={'SEE MORE'}
-                  route={'/item'}
+                  route={`/item/${data.id}`}
                   letter_sp={'small'}
                 />
               </ItemContent>

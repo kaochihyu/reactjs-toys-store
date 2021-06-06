@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { useHistory, Link } from 'react-router-dom';
 import { Container } from '../components/Container';
 import { P } from '../components/Text';
-import { ActionButton } from '../components/Button';
-import { SearchBar } from '../components/Search';
-import item_1 from '../image/item.png';
+import {
+  ActionButton,
+  AddItemButton,
+  GoToTopButton,
+} from '../components/Button';
+import { Search } from '../components/Search';
+import { useDispatch, useSelector } from 'react-redux';
+import { getItem, getItems, deleteItem } from '../redux/reducer/itemSlice';
 
 const PageContainer = styled(Container)`
   top: 9rem;
   text-align: center;
   padding: 0;
+
+  ${({ theme }) => theme.media.sm} {
+    top: 13.25rem;
+  }
 `;
 
 const ItemsList = styled.div`
@@ -90,54 +100,91 @@ const Buttons = styled.div`
   }
 `;
 
-const itemDatas = [
-  {
-    id: 1,
-    name: 'Toys Car',
-    tag: '3-5 year',
-    price: '100',
-    src: item_1,
-    description:
-      'Push it, pull it and the car run. It can let child to be trained the arms muscles.',
-    stock: 4,
-  },
-  {
-    id: 2,
-    name: 'Toys Car',
-    tag: '3-5 year',
-    price: '100',
-    src: item_1,
-    description:
-      'Push it, pull it and the car run. It can let child to be trained the arms muscles.',
-    stock: 4,
-  },
-];
+const ElementWrapper = styled(Container)`
+  position: fixed;
+  top: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: ${({ theme }) => theme.space.sm};
+  padding-bottom: ${({ theme }) => theme.space.sm};
+  background-color: ${({ theme }) => theme.colors.white};
+  z-index: 1;
+  ${({ theme }) => theme.media.sm} {
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+  }
+`;
 
 function MsPage() {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const items = useSelector((store) => store.item.items);
+  const user = useSelector((store) => store.user.user);
+
+  if (user && user.username !== 'admin') {
+    history.push('/');
+  }
+
+  useEffect(() => {
+    dispatch(getItems());
+  }, [dispatch]);
+
+  if (!items) return null;
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    const id = e.target.attributes.getNamedItem('data-id').value;
+    dispatch(deleteItem(id)).then(() => history.go(0));
+  };
+
+  const handelEdit = (e) => {
+    const id = e.target.attributes.getNamedItem('data-id').value;
+    history.push(`editItem/${id}`);
+  };
+
   return (
     <>
-      <SearchBar />
+      <ElementWrapper>
+        <Link to={'/addItem'}>
+          <AddItemButton>Add Item +</AddItemButton>
+        </Link>
+        <Search />
+      </ElementWrapper>
+
       <PageContainer>
         <ItemsList>
-          {itemDatas.map((data) => (
+          {items.map((data) => (
             <Item key={data.id}>
               <ItemImage>
-                <img src={data.src} alt={data.name} />
+                <img src={data.picture} alt={data.name} />
               </ItemImage>
               <ItemContent>
                 <P>ID:{data.id}</P>
                 <P>{data.name}</P>
-                <P>Stock: {data.stock}</P>
+                <P>Stock: {data.quantity}</P>
                 <P>${data.price}</P>
                 <Buttons>
-                  <ActionButton content={'Edit'} color={'secondary'} />
-                  <ActionButton content={'Delete'} color={'primary'} />
+                  <ActionButton
+                    content={'Edit'}
+                    color={'secondary'}
+                    onClick={handelEdit}
+                    data={data.id}
+                  />
+                  <ActionButton
+                    content={'Delete'}
+                    color={'primary'}
+                    onClick={handleDelete}
+                    data={data.id}
+                  />
                 </Buttons>
               </ItemContent>
             </Item>
           ))}
         </ItemsList>
       </PageContainer>
+      <GoToTopButton />
     </>
   );
 }
