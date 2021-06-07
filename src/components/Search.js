@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { Container } from '../components/Container';
@@ -11,7 +11,7 @@ const StyledSearch = styled.div`
   border-bottom: 0.125rem solid #000;
 `;
 
-const StyledSearchBar = styled(Container)`
+export const SearchBar = styled(Container)`
   position: fixed;
   top: 80px;
   z-index: 1;
@@ -26,19 +26,16 @@ const StyledSearchBar = styled(Container)`
   }
 `;
 
-export const Search = () => {
+export const Search = ({ value, onChange }) => {
   return (
     <StyledSearch>
-      <input placeholder="Search..." />
+      <input
+        type="text"
+        value={value}
+        onChange={onChange}
+        placeholder="Search..."
+      />
       <AiOutlineSearch size={24} />
     </StyledSearch>
-  );
-};
-
-export const SearchBar = () => {
-  return (
-    <StyledSearchBar>
-      <Search />
-    </StyledSearchBar>
   );
 };

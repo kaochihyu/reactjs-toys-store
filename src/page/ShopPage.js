@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container } from '../components/Container';
-import { SearchBar } from '../components/Search';
+import { Search, SearchBar } from '../components/Search';
 import { H2, H3, P } from '../components/Text';
 import { GoButton, GoToTopButton } from '../components/Button';
 import { Footer } from '../components/Footer';
@@ -53,6 +53,7 @@ const Blank = styled.div`
 `;
 
 function ShopPage() {
+  const [search, setSearch] = useState();
   const dispatch = useDispatch();
   const items = useSelector((store) => store.item.items);
 
@@ -62,12 +63,32 @@ function ShopPage() {
 
   if (!items) return null;
 
+  const filterItems = (items, search) => {
+    if (!search) {
+      return items;
+    }
+    return items.filter((item) => {
+      const itemName = item.name.toLowerCase();
+      const itemTag = item.tag.toLowerCase();
+      const itemPrice = item.price.toLowerCase();
+      return (
+        itemName.includes(search) ||
+        itemTag.includes(search) ||
+        itemPrice.includes(search)
+      );
+    });
+  };
+
+  const filteredItems = filterItems(items, search);
+
   return (
     <>
-      <SearchBar />
+      <SearchBar>
+        <Search value={search} onChange={(e) => setSearch(e.target.value)} />
+      </SearchBar>
       <PageContainer>
         <Items>
-          {items.map((data) => (
+          {filteredItems.map((data) => (
             <Item key={data.id}>
               <img src={data.picture} alt={data.name} />
               <ItemContent>
