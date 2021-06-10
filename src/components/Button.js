@@ -100,7 +100,16 @@ export const FlexWrapper = styled.div`
   }
 `;
 
-const StyledDeleteButton = styled(Button)``;
+const StyledDeleteButton = styled(Button)`
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #000;
+  transition: 0.1s ease-in-out;
+  transform: rotate(45deg);
+`;
 
 export const GoButton = ({ content, route, letter_sp }) => {
   return (
@@ -154,7 +163,7 @@ export const GoToTopButton = () => {
 export const DeleteButton = ({ onClick, dataId }) => {
   return (
     <StyledDeleteButton onClick={onClick} data-id={dataId}>
-      <GrClose size={22} data-id={dataId} />
+      +
     </StyledDeleteButton>
   );
 };
