@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { H2 } from '../components/Text';
+import { H2, AlertText } from '../components/Text';
 import { ArrowButton, ActionButton, FlexWrapper } from '../components/Button';
-import { Form, FormItem, FormInput, Note } from '../components/Form';
+import { Form, FormItem, FormInput } from '../components/Form';
 import { updateItem, getItem } from '../redux/reducer/itemSlice';
 
 const Logo = styled(Link)`
@@ -30,10 +30,6 @@ const BackButton = styled(ArrowButton)`
   left: 0;
 `;
 
-const AlertText = styled.div`
-  color: red;
-`;
-
 function EditItemPage() {
   const history = useHistory();
   const { id } = useParams();
@@ -45,7 +41,7 @@ function EditItemPage() {
   const [picture, setPicture] = useState(item.picture);
   const [quantity, setQuantity] = useState(item.quantity);
   const [price, setPrice] = useState(item.price);
-  const [errorMessage, setErrorMessage] = useState();
+  const [warning, setWarning] = useState();
 
   useEffect(() => {
     dispatch(getItem(id));
@@ -69,7 +65,7 @@ function EditItemPage() {
       !quantity ||
       !price
     ) {
-      setErrorMessage('Something missed');
+      setWarning('Something missed');
     } else {
       dispatch(
         updateItem(id, itemName, description, itemTag, picture, quantity, price)
@@ -159,7 +155,7 @@ function EditItemPage() {
             />
           </FormItem>
         </FlexWrapper>
-        {errorMessage && <AlertText>{errorMessage}</AlertText>}
+        {warning && <AlertText>{warning}</AlertText>}
 
         <FlexWrapper center>
           <ActionButton color={'secondary'} content={'Cnacel'} />

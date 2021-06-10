@@ -57,7 +57,7 @@ const StyledCloseButton = styled(Button)`
   background-color: #fff;
 `;
 
-const StyledActionButton = styled(Button)`
+export const StyledActionButton = styled(Button)`
   width: 10rem;
   padding: 0.5rem 1rem;
   color: ${(props) => (props.color === 'primary' ? '#fff' : '#000')};
@@ -133,7 +133,7 @@ export const CloseButton = ({ handleClick }) => {
 
 export const ActionButton = ({ color, content, onClick, data }) => {
   return (
-    <StyledActionButton color={color} onClick={onClick} data-id={data}>
+    <StyledActionButton color={color} onClick={onClick} data-id={data} >
       <H3 data-id={data}>{content}</H3>
     </StyledActionButton>
   );
@@ -151,10 +151,10 @@ export const GoToTopButton = () => {
   );
 };
 
-export const DeleteButton = () => {
+export const DeleteButton = ({ onClick, dataId }) => {
   return (
-    <StyledDeleteButton>
-      <GrClose size={22} />
+    <StyledDeleteButton onClick={onClick} data-id={dataId}>
+      <GrClose size={22} data-id={dataId} />
     </StyledDeleteButton>
   );
 };

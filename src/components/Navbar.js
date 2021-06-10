@@ -25,6 +25,10 @@ const Nav = styled(Container)`
   &.scroll {
     background-color: white;
   }
+
+  > a {
+    position: relative;
+  }
 `;
 
 const MobileMenuIcon = styled(AiOutlineMenu)`
@@ -99,10 +103,29 @@ const NavItem = styled(H3)`
   cursor: pointer;
 `;
 
-const NavShopIcon = styled(GrShop)`
+const NavCart = styled(Link)`
+  &.hidden {
+    visibility: hidden;
+  }
+`;
+
+const NavCartIcon = styled(GrShop)`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const CartItemsNum = styled.div`
+  position: absolute;
+  top: -0.35rem;
+  left: 0.75rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  color: #fff;
+  background-color: #fa2222;
+  text-align: center;
+  font-size: ${({ theme }) => theme.fontSizes.sm}
 `;
 
 function Navbar() {
@@ -113,6 +136,7 @@ function Navbar() {
   const [click, setClick] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user.user);
+  const cartItems = useSelector((store) => store.item.cartItems);
   let admin;
 
   if (user && user.username === 'admin') {
@@ -210,9 +234,10 @@ function Navbar() {
           </NavItem>
         )}
       </NavItems>
-      <Link to="/cart">
-        <NavShopIcon size={22} />
-      </Link>
+      <NavCart to="/cart" className={user ? '' : 'hidden'}>
+        <NavCartIcon size={22} />
+        {cartItems.length > 0 && (<CartItemsNum>{cartItems.length}</CartItemsNum>)}
+      </NavCart>
     </Nav>
   );
 }

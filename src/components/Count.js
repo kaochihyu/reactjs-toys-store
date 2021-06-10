@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 
@@ -7,6 +7,7 @@ const Operation = styled.button`
 `;
 
 const StyledCount = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,33 +27,17 @@ const StyledCount = styled.div`
   }
 `;
 
-const stock = 5;
-
-export const Count = () => {
-  const [nums, setNums] = useState(1);
-
-  const handleClickMinus = () => {
-    setNums(nums - 1);
-    if (nums <= 1) {
-      setNums(1);
-    }
-  };
-
-  const handleClickPlus = () => {
-    setNums(nums + 1);
-    if (nums >= stock) {
-      setNums(stock);
-    }
-  };
+export const Count = (props) => {
+  const { num, handleClickPlus, handleClickMinus, dataId } = props;
 
   return (
     <StyledCount>
-      <Operation onClick={handleClickMinus}>
-        <AiOutlineMinus />
+      <Operation data-id={dataId} onClick={handleClickMinus}>
+        <AiOutlineMinus data-id={dataId} />
       </Operation>
-      <div>{nums}</div>
-      <Operation onClick={handleClickPlus}>
-        <AiOutlinePlus />
+      <div>{num}</div>
+      <Operation data-id={dataId} onClick={handleClickPlus}>
+        <AiOutlinePlus data-id={dataId} />
       </Operation>
     </StyledCount>
   );
