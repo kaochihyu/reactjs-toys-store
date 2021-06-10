@@ -5,7 +5,11 @@ import { Link, useHistory } from 'react-router-dom';
 import { Container } from '../components/Container';
 import { H1, H3, P, AlertText } from '../components/Text';
 import { Count } from '../components/Count';
-import { ActionButton, StyledActionButton, DeleteButton } from '../components/Button';
+import {
+  ActionButton,
+  StyledActionButton,
+  DeleteButton,
+} from '../components/Button';
 import { Footer } from '../components/Footer';
 import { setCartItems } from '../redux/reducer/itemSlice';
 
@@ -191,14 +195,20 @@ function CartPage() {
         {cartItems.length === 0 && (
           <EmptyCart>
             <H1>Cart is Empty</H1>
-            <GoShoppingButton as={Link} to={'/shop'}>Go Shopping</GoShoppingButton>
+            <GoShoppingButton as={Link} to={'/shop'}>
+              Go Shopping
+            </GoShoppingButton>
           </EmptyCart>
-        )
-        }
+        )}
         {cartItems.map((cartItem) => (
           <CartItem key={cartItem.id}>
             <ItemContent as={Link} to={`/item/${cartItem.id}`}>
-              <img src={cartItem.picture} alt={cartItem.name} as={Link} to={`/item/${cartItem.id}`} />
+              <img
+                src={cartItem.picture}
+                alt={cartItem.name}
+                as={Link}
+                to={`/item/${cartItem.id}`}
+              />
               <ItemDescription>
                 <P>{cartItem.name}</P>
                 <P>${cartItem.price}</P>
@@ -206,7 +216,11 @@ function CartPage() {
             </ItemContent>
             <ItemAction>
               <Count
-                num={cartItem.cart >= cartItem.quantity ? cartItem.quantity : cartItem.cart}
+                num={
+                  cartItem.cart >= cartItem.quantity
+                    ? cartItem.quantity
+                    : cartItem.cart
+                }
                 handleClickPlus={handleClickPlus}
                 handleClickMinus={handleClickMinus}
                 dataId={cartItem.id}

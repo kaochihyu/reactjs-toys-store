@@ -133,7 +133,7 @@ export const CloseButton = ({ handleClick }) => {
 
 export const ActionButton = ({ color, content, onClick, data }) => {
   return (
-    <StyledActionButton color={color} onClick={onClick} data-id={data} >
+    <StyledActionButton color={color} onClick={onClick} data-id={data}>
       <H3 data-id={data}>{content}</H3>
     </StyledActionButton>
   );

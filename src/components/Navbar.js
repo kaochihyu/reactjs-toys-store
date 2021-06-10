@@ -125,7 +125,7 @@ const CartItemsNum = styled.div`
   color: #fff;
   background-color: #fa2222;
   text-align: center;
-  font-size: ${({ theme }) => theme.fontSizes.sm}
+  font-size: ${({ theme }) => theme.fontSizes.sm};
 `;
 
 function Navbar() {
@@ -236,7 +236,9 @@ function Navbar() {
       </NavItems>
       <NavCart to="/cart" className={user ? '' : 'hidden'}>
         <NavCartIcon size={22} />
-        {cartItems.length > 0 && (<CartItemsNum>{cartItems.length}</CartItemsNum>)}
+        {cartItems.length > 0 && (
+          <CartItemsNum>{cartItems.length}</CartItemsNum>
+        )}
       </NavCart>
     </Nav>
   );

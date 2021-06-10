@@ -62,7 +62,7 @@ function ItemPage() {
   const [num, setNum] = useState(1);
   const [warning, setWarning] = useState('');
   const { id } = useParams();
-  const history = useHistory()
+  const history = useHistory();
   const dispatch = useDispatch();
   const item = useSelector((store) => store.item.item);
   const user = useSelector((store) => store.user.user);
@@ -76,7 +76,7 @@ function ItemPage() {
 
   const handleOnAdd = () => {
     if (!user) {
-      history.push('/login')
+      history.push('/login');
     }
 
     let cartData;
