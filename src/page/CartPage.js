@@ -93,6 +93,10 @@ const CheckOut = styled.div`
   align-items: flex-end;
   gap: ${({ theme }) => theme.space.md};
 
+  ${({ theme }) => theme.media.md} {
+    padding: ${({ theme }) => theme.space.md} 3.75rem;
+  }
+
   ${({ theme }) => theme.media.sm} {
     padding: 0 ${({ theme }) => theme.space.md} 3.75rem
       ${({ theme }) => theme.space.md};

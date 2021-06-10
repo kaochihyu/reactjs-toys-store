@@ -101,6 +101,10 @@ const NavLogo = styled.div`
 const NavItem = styled(H3)`
   color: ${(props) => props.theme.colors.black};
   cursor: pointer;
+
+  &.active {
+    border-bottom: solid 2px ${({ theme }) => theme.colors.black};
+  }
 `;
 
 const NavCart = styled(Link)`
@@ -211,14 +215,17 @@ function Navbar() {
         <NavLogo>
           <Link to="/">TOYS</Link>
         </NavLogo>
-        <NavItem>
+        <NavItem className={location.pathname === '/' ? 'active' : ''}>
           <Link to="/">Home</Link>
         </NavItem>
-        <NavItem>
+        <NavItem className={location.pathname === '/shop' ? 'active' : ''}>
           <Link to="/shop">Shop</Link>
         </NavItem>
         {admin && (
-          <NavItem onClick={() => setClick(false)}>
+          <NavItem
+            className={location.pathname === '/ms' ? 'active' : ''}
+            onClick={() => setClick(false)}
+          >
             <Link to="/ms">Management</Link>
           </NavItem>
         )}
