@@ -90,7 +90,13 @@ function ItemPage() {
       cartData = cartItems.map((cartItem) => {
         console.log(cartItem.cart);
         return cartItem.id === parseInt(id)
-          ? { ...exist, cart: parseInt(cartItem.cart) + parseInt(num) }
+          ? {
+            ...exist,
+            cart:
+              cartItem.cart >= cartItem.quantity - 1
+                ? cartItem.quantity
+                : parseInt(cartItem.cart) + parseInt(num),
+          }
           : cartItem;
       });
       dispatch(setCartItems(cartData));
@@ -111,6 +117,11 @@ function ItemPage() {
       setWarning('There is no more stock');
       setNum(item.quantity);
     }
+  };
+
+  const handleBuyKnow = () => {
+    handleOnAdd();
+    history.push('/cart');
   };
 
   return (
@@ -134,7 +145,11 @@ function ItemPage() {
               color={'primary'}
               onClick={handleOnAdd}
             />
-            <ActionButton content={'Buy Now'} color={'secondary'} />
+            <ActionButton
+              content={'Buy Now'}
+              color={'secondary'}
+              onClick={handleBuyKnow}
+            />
           </FlexWrapper>
         </ItemContent>
       </Item>

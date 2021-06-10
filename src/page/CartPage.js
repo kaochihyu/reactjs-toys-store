@@ -78,6 +78,11 @@ const ItemAction = styled.div`
     width: 100%;
     justify-content: space-between;
   }
+
+  > ${AlertText} {
+    position: absolute;
+    top: 2.75rem;
+  }
 `;
 
 const CheckOut = styled.div`
