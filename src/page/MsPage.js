@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useHistory, Link } from 'react-router-dom';
 import { Container } from '../components/Container';
@@ -10,7 +10,7 @@ import {
 } from '../components/Button';
 import { Search } from '../components/Search';
 import { useDispatch, useSelector } from 'react-redux';
-import { getItem, getItems, deleteItem } from '../redux/reducer/itemSlice';
+import { getItems, deleteItem } from '../redux/reducer/itemSlice';
 
 const PageContainer = styled(Container)`
   top: 9rem;
@@ -71,11 +71,32 @@ const ItemContent = styled.div`
   justify-content: space-between;
   align-items: center;
 
+  > p {
+    text-align: left;
+  }
+
+  > p:nth-child(2) {
+    width: 20%;
+  }
+
+  > p:nth-child(3) {
+    width: 10%;
+  }
+
+  > p:nth-child(1),
+  p:nth-child(4) {
+    width: 8%;
+  }
+
   ${({ theme }) => theme.media.md} {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.625rem;
     padding: 10px;
+
+    > p {
+      width: initial;
+    }
   }
 `;
 
@@ -120,6 +141,7 @@ const ElementWrapper = styled(Container)`
 function MsPage() {
   const history = useHistory();
   const dispatch = useDispatch();
+  const [search, setSearch] = useState();
   const items = useSelector((store) => store.item.items);
   const user = useSelector((store) => store.user.user);
 
@@ -132,6 +154,26 @@ function MsPage() {
   }, [dispatch]);
 
   if (!items) return null;
+
+  const filterItems = (items, search) => {
+    if (!search) {
+      return items;
+    }
+    return items.filter((item) => {
+      const itemId = item.id.toString()
+      const itemName = item.name.toLowerCase();
+      const itemPrice = item.price.toLowerCase();
+      const itemStock = item.quantity.toLowerCase();
+      return (
+        itemId.includes(search) ||
+        itemName.includes(search) ||
+        itemPrice.includes(search) ||
+        itemStock.includes(search)
+      );
+    });
+  };
+
+  const filteredItems = filterItems(items, search);
 
   const handleDelete = (e) => {
     e.preventDefault();
@@ -150,12 +192,12 @@ function MsPage() {
         <Link to={'/addItem'}>
           <AddItemButton>Add Item +</AddItemButton>
         </Link>
-        <Search />
+        <Search value={search} onChange={(e) => setSearch(e.target.value)} />
       </ElementWrapper>
 
       <PageContainer>
         <ItemsList>
-          {items.map((data) => (
+          {filteredItems.map((data) => (
             <Item key={data.id}>
               <ItemImage>
                 <img src={data.picture} alt={data.name} />

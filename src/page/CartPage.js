@@ -1,12 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 import { Container } from '../components/Container';
-import { H1, H3, P } from '../components/Text';
+import { H1, H3, P, AlertText } from '../components/Text';
 import { Count } from '../components/Count';
-import { ActionButton, DeleteButton } from '../components/Button';
+import {
+  ActionButton,
+  StyledActionButton,
+  DeleteButton,
+} from '../components/Button';
 import { Footer } from '../components/Footer';
-import item_1 from '../image/item.png';
+import { setCartItems } from '../redux/reducer/itemSlice';
 
 const PageContainer = styled(Container)`
   top: 5rem;
@@ -20,6 +25,10 @@ const CartList = styled.div`
 
   > * ~ * {
     margin-top: ${({ theme }) => theme.space.md};
+  }
+
+  > ${ActionButton} {
+    margin: 2.5rem auto;
   }
 
   ${({ theme }) => theme.media.md} {
@@ -63,10 +72,16 @@ const ItemAction = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 300px;
+  position: relative;
 
   ${({ theme }) => theme.media.sm} {
     width: 100%;
     justify-content: space-between;
+  }
+
+  > ${AlertText} {
+    position: absolute;
+    top: 2.75rem;
   }
 `;
 
@@ -99,61 +114,140 @@ const Total = styled.div`
   }
 `;
 
-const itemDatas = [
-  {
-    id: 1,
-    name: 'Toys Car',
-    tag: '3-5 year',
-    price: '100',
-    src: item_1,
-    description:
-      'Push it, pull it and the car run. It can let child to be trained the arms muscles.',
-    stock: 4,
-  },
-  {
-    id: 2,
-    name: 'Toys Car',
-    tag: '3-5 year',
-    price: '100',
-    src: item_1,
-    description:
-      'Push it, pull it and the car run. It can let child to be trained the arms muscles.',
-    stock: 4,
-  },
-];
+const EmptyCart = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  align-items: center;
+  justify-content: center;
+  height: 13.75rem;
+`;
+
+const GoShoppingButton = styled(StyledActionButton)`
+  transition: 0.2s ease-in-out;
+  &:hover {
+    color: #fff;
+    background-color: #000;
+  }
+`;
 
 function CartPage() {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const user = useSelector((store) => store.user.user);
+  const cartItems = useSelector((store) => store.item.cartItems);
+  const itemsPrice = cartItems.reduce(
+    (a, cartItem) => a + cartItem.cart * cartItem.price,
+    0
+  );
+  const shippingPrice = itemsPrice >= 1000 || itemsPrice === 0 ? 0 : 60;
+  const total = itemsPrice + shippingPrice;
+
+  if (!user) {
+    history.push('/');
+  }
+
+  const handleClickMinus = (e) => {
+    e.preventDefault();
+    let cartData;
+    const id = parseInt(e.target.attributes.getNamedItem('data-id').value);
+    cartData = cartItems.map((cartItem) => {
+      return cartItem.id === id
+        ? {
+          ...cartItem,
+          cart: cartItem.cart <= 1 ? 1 : cartItem.cart - 1,
+          warning: '',
+        }
+        : cartItem;
+    });
+
+    dispatch(setCartItems(cartData));
+  };
+
+  const handleClickPlus = (e) => {
+    e.preventDefault();
+    let cartData;
+
+    const id = parseInt(e.target.attributes.getNamedItem('data-id').value);
+    cartData = cartItems.map((cartItem) => {
+      return cartItem.id === id
+        ? {
+          ...cartItem,
+          cart:
+            cartItem.cart >= cartItem.quantity
+              ? cartItem.quantity
+              : cartItem.cart + 1,
+          warning: cartItem.cart >= cartItem.quantity ? 'No more stock' : '',
+        }
+        : cartItem;
+    });
+
+    dispatch(setCartItems(cartData));
+  };
+
+  const handleDelete = (e) => {
+    let cartData;
+    const id = parseInt(e.target.attributes.getNamedItem('data-id').value);
+    cartData = cartItems.filter((cartItem) => cartItem.id !== id);
+    dispatch(setCartItems(cartData));
+  };
 
   return (
     <PageContainer>
       {user ? <H1>{user.nickname}'s Cart</H1> : <H1>My Cart</H1>}
 
       <CartList>
-        {itemDatas.map((data) => (
-          <CartItem key={data.id}>
-            <ItemContent>
-              <img src={data.src} alt={data.name} />
+        {cartItems.length === 0 && (
+          <EmptyCart>
+            <H1>Cart is Empty</H1>
+            <GoShoppingButton as={Link} to={'/shop'}>
+              Go Shopping
+            </GoShoppingButton>
+          </EmptyCart>
+        )}
+        {cartItems.map((cartItem) => (
+          <CartItem key={cartItem.id}>
+            <ItemContent as={Link} to={`/item/${cartItem.id}`}>
+              <img
+                src={cartItem.picture}
+                alt={cartItem.name}
+                as={Link}
+                to={`/item/${cartItem.id}`}
+              />
               <ItemDescription>
-                <P>{data.name}</P>
-                <P>${data.price}</P>
+                <P>{cartItem.name}</P>
+                <P>${cartItem.price}</P>
               </ItemDescription>
             </ItemContent>
             <ItemAction>
-              <Count />
-              <P>$100</P>
-              <DeleteButton />
+              <Count
+                num={
+                  cartItem.cart >= cartItem.quantity
+                    ? cartItem.quantity
+                    : cartItem.cart
+                }
+                handleClickPlus={handleClickPlus}
+                handleClickMinus={handleClickMinus}
+                dataId={cartItem.id}
+              />
+              <P>${cartItem.cart * cartItem.price}</P>
+              <DeleteButton onClick={handleDelete} dataId={cartItem.id} />
+              {cartItem.warning && <AlertText>{cartItem.warning}</AlertText>}
             </ItemAction>
           </CartItem>
         ))}
       </CartList>
-      <CheckOut>
-        <Total>
-          <H3>Total Price</H3>
-          <H3>$100</H3>
-        </Total>
-        <ActionButton content={'Check out'} color={'primary'} />
-      </CheckOut>
+      {cartItems.length !== 0 && (
+        <CheckOut>
+          <Total>
+            <P>Items Price ${itemsPrice}</P>
+            <P>Shipping Price ${shippingPrice}</P>
+            <H3>Total Price</H3>
+            <H3>${total}</H3>
+          </Total>
+          <ActionButton content={'Check out'} color={'primary'} />
+        </CheckOut>
+      )}
       <Footer />
     </PageContainer>
   );

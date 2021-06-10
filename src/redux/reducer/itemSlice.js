@@ -13,6 +13,7 @@ const itemReducer = createSlice({
     isLoadingItem: false,
     item: null,
     items: [],
+    cartItems: [],
     deleteResponse: null,
     newItemResponse: null,
   },
@@ -30,6 +31,10 @@ const itemReducer = createSlice({
       state.items = action.payload;
     },
 
+    setCartItems: (state, action) => {
+      state.cartItems = action.payload;
+    },
+
     setDeleteResponse: (state, action) => {
       state.deleteResponse = action.payload;
     },
@@ -44,6 +49,7 @@ export const {
   setIsLoadingItem,
   setItem,
   setItems,
+  setCartItems,
   setDeleteResponse,
   setNewItemResponse,
 } = itemReducer.actions;
@@ -108,4 +114,5 @@ export const updateItem =
         return res;
       });
     };
+
 export default itemReducer.reducer;

@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { H2 } from '../components/Text';
+import { H2, AlertText } from '../components/Text';
 import { ArrowButton, ActionButton, FlexWrapper } from '../components/Button';
-import { Form, FormItem, FormInput, Note } from '../components/Form';
+import { Form, FormItem, FormInput } from '../components/Form';
 import { addItem } from '../redux/reducer/itemSlice';
 
 const Logo = styled(Link)`
@@ -28,10 +28,6 @@ const BackButton = styled(ArrowButton)`
   position: absolute;
   top: 0;
   left: 0;
-`;
-
-const AlertText = styled.div`
-  color: red;
 `;
 
 function AddItemPage() {

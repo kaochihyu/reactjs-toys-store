@@ -47,7 +47,7 @@ function LoginPage() {
     }
     dispatch(login(username, password)).then((res) => {
       if (res) {
-        history.push('/');
+        history.goBack();
       }
     });
   };

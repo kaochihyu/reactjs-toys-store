@@ -19,7 +19,6 @@ import { getUser } from './redux/reducer/userSlice';
 function App() {
   const token = getAuthToken();
   const dispatch = useDispatch();
-  const user = useSelector((store) => store.user.user);
   const isLoadingUser = useSelector((store) => store.user.isLoadingUser);
 
   useEffect(() => {

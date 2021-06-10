@@ -25,3 +25,7 @@ export const Ps = styled.p`
   font-size: ${(props) => props.theme.fontSizes.xs};
   line-height: 1.4;
 `;
+
+export const AlertText = styled(Ps)`
+  color: red;
+`;
