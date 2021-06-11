@@ -30,16 +30,15 @@ export const { setIsLoadingUser, setUser, setErrorMessage } =
 
 export const register = (username, password, nickname) => (dispatch) =>
   registerAPI(username, password, nickname).then((resRegister) => {
-    if (resRegister.status === 401) {
+    if (resRegister.ok === 0) {
       dispatch(setErrorMessage(resRegister.message));
       return;
     }
-    setAuthToken(resRegister.access_token);
+    setAuthToken(resRegister.token);
     return getMeAPI().then((resMe) => {
-      console.log('me', resMe);
-      if (resMe.status === 401) {
+      if (resMe.ok !== 1) {
         setAuthToken(null);
-        dispatch(setErrorMessage(resMe.message));
+        dispatch(setErrorMessage(resMe.toSring()));
         return;
       }
       dispatch(setUser(resMe.data));
@@ -49,15 +48,17 @@ export const register = (username, password, nickname) => (dispatch) =>
 
 export const login = (username, password) => (dispatch) =>
   loginAPI(username, password).then((resLogin) => {
-    if (resLogin.status === 401) {
+    console.log(resLogin)
+    if (resLogin.ok === 0) {
       dispatch(setErrorMessage(resLogin.message));
       return;
     }
-    setAuthToken(resLogin.access_token);
+    setAuthToken(resLogin.token);
     return getMeAPI().then((resMe) => {
-      if (resMe.status === 401) {
+      console.log("login", resMe)
+      if (resMe.ok !== 1) {
         setAuthToken(null);
-        dispatch(setErrorMessage(resMe.message));
+        dispatch(setErrorMessage(resMe.toString()));
         return;
       }
       dispatch(setUser(resMe.data));
