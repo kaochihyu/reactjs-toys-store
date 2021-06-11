@@ -19,7 +19,7 @@ const Nav = styled(Container)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 2;
+  z-index: 3;
   transition: 0.1s ease-in;
 
   &.scroll {
@@ -54,6 +54,7 @@ const MobileNavItems = styled.div`
   width: 100%;
   height: 25rem;
   background-color: ${(props) => props.theme.colors.black};
+  z-index: 3;
 
   &.open {
     left: 0;
