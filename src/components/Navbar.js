@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Link, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { GrShop } from 'react-icons/gr';
-import { AiOutlineMenu } from 'react-icons/ai';
-import { Container } from './Container';
-import { H3 } from './Text';
-import { CloseButton } from './Button';
-import { setAuthToken } from '../utils';
-import { setUser } from '../redux/reducer/userSlice';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { Link, useHistory, useLocation, useRouteMatch } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { GrShop } from "react-icons/gr";
+import { AiOutlineMenu } from "react-icons/ai";
+import { Container } from "./Container";
+import { H3 } from "./Text";
+import { CloseButton } from "./Button";
+import { setAuthToken } from "../utils";
+import { setUser } from "../redux/reducer/userSlice";
 
 const Nav = styled(Container)`
   position: fixed;
@@ -23,7 +23,7 @@ const Nav = styled(Container)`
   transition: 0.1s ease-in;
 
   &.scroll {
-    background-color: white;
+    background-color: #fff;
   }
 
   > a {
@@ -41,7 +41,7 @@ const MobileMenuIcon = styled(AiOutlineMenu)`
 const MobileNavLogo = styled.div`
   display: none;
   font-size: 1.5rem;
-  font-family: 'Patua One', cursive;
+  font-family: "Patua One", cursive;
   ${({ theme }) => theme.media.sm} {
     display: inline-block;
   }
@@ -96,7 +96,7 @@ const NavItems = styled.div`
 
 const NavLogo = styled.div`
   font-size: 1.5rem;
-  font-family: 'Patua One', cursive;
+  font-family: "Patua One", cursive;
 `;
 
 const NavItem = styled(H3)`
@@ -130,61 +130,70 @@ const CartItemsNum = styled.div`
   color: #fff;
   background-color: #fa2222;
   text-align: center;
-  font-size: ${({ theme }) => theme.fontSizes.sm};
+  padding: 2px 0;
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  visibility: hidden;
+
+  &.visible {
+    visibility: visible;
+  }
 `;
 
 function Navbar() {
+  let admin = "";
+  let cartItems = [];
   const location = useLocation();
   const history = useHistory();
-  const match = useRouteMatch('/editItem/:id');
-  const [scroll, setScroll] = useState(false);
+  const match = useRouteMatch("/editItem/:id");
   const [click, setClick] = useState(false);
+  const [scroll, setScroll] = useState();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user.user);
-  const cartItems = useSelector((store) => store.item.cartItems);
-  let admin;
-
-  if (user && user.username === 'admin') {
-    admin = user.username;
-  }
 
   if (
-    location.pathname === '/login' ||
-    location.pathname === '/signup' ||
-    location.pathname === '/addItem' ||
-    (match && match.path === '/editItem/:id')
+    location.pathname === "/login" ||
+    location.pathname === "/signup" ||
+    location.pathname === "/addItem" ||
+    (match && match.path === "/editItem/:id")
   ) {
     return null;
   }
 
-  window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 0) {
+  if (user) {
+    admin = user.username === "admin" ? user.username : "";
+    cartItems = user.cart;
+  }
+
+  const changeBackgroundColor = () => {
+    if (window.scrollY >= 80) {
       setScroll(true);
     } else {
       setScroll(false);
     }
-  });
+  };
+
+  window.addEventListener("scroll", changeBackgroundColor);
 
   const handleClick = () => {
     setClick(!click);
   };
 
   const handleLogout = () => {
-    setAuthToken('');
-    dispatch(setUser(''));
-    if (location.pathname !== '/') {
-      history.push('/');
+    setAuthToken("");
+    dispatch(setUser(""));
+    if (location.pathname !== "/") {
+      history.push("/");
     }
     setClick(false);
   };
 
   return (
-    <Nav className={scroll ? 'scroll' : ''}>
+    <Nav className={scroll ? "scroll" : ""}>
       <MobileMenuIcon size={30} onClick={handleClick} />
       <MobileNavLogo>
         <Link to="/">TOYS</Link>
       </MobileNavLogo>
-      <MobileNavItems className={click ? 'open' : 'close'}>
+      <MobileNavItems className={click ? "open" : "close"}>
         <MobileNavItemsContainer>
           <CloseButton handleClick={handleClick} />
           <NavItem onClick={() => setClick(false)}>
@@ -216,15 +225,15 @@ function Navbar() {
         <NavLogo>
           <Link to="/">TOYS</Link>
         </NavLogo>
-        <NavItem className={location.pathname === '/' ? 'active' : ''}>
+        <NavItem className={location.pathname === "/" ? "active" : ""}>
           <Link to="/">Home</Link>
         </NavItem>
-        <NavItem className={location.pathname === '/shop' ? 'active' : ''}>
+        <NavItem className={location.pathname === "/shop" ? "active" : ""}>
           <Link to="/shop">Shop</Link>
         </NavItem>
         {admin && (
           <NavItem
-            className={location.pathname === '/ms' ? 'active' : ''}
+            className={location.pathname === "/ms" ? "active" : ""}
             onClick={() => setClick(false)}
           >
             <Link to="/ms">Management</Link>
@@ -242,11 +251,11 @@ function Navbar() {
           </NavItem>
         )}
       </NavItems>
-      <NavCart to="/cart" className={user ? '' : 'hidden'}>
+      <NavCart to="/cart" className={user ? "" : "hidden"}>
         <NavCartIcon size={22} />
-        {cartItems.length > 0 && (
-          <CartItemsNum>{cartItems.length}</CartItemsNum>
-        )}
+        <CartItemsNum className={cartItems.length > 0 ? "visible" : ""}>
+          {cartItems.length > 10 ? "10+" : cartItems.length}
+        </CartItemsNum>
       </NavCart>
     </Nav>
   );

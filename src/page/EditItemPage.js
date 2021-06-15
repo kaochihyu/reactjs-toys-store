@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { Link, useHistory, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { H2, AlertText } from '../components/Text';
-import { ArrowButton, ActionButton, FlexWrapper } from '../components/Button';
-import { Form, FormItem, FormInput } from '../components/Form';
-import { updateItem, getItem } from '../redux/reducer/itemSlice';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { Link, useHistory, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { H2, AlertText } from "../components/Text";
+import { ArrowButton, ActionButton, FlexWrapper } from "../components/Button";
+import { Form, FormItem, FormInput } from "../components/Form";
+import { updateItem, getItem } from "../redux/reducer/itemSlice";
 
 const Logo = styled(Link)`
   color: #000;
-  font-family: 'Patua One', cursive;
+  font-family: "Patua One", cursive;
   font-size: ${({ theme }) => theme.fontSizes.md};
 `;
 
@@ -34,6 +34,7 @@ function EditItemPage() {
   const history = useHistory();
   const { id } = useParams();
   const dispatch = useDispatch();
+  const user = useSelector((store) => store.user.user);
   const item = useSelector((store) => store.item.item);
   const [itemName, setItemName] = useState(item.name);
   const [description, setDescription] = useState(item.description);
@@ -43,17 +44,18 @@ function EditItemPage() {
   const [price, setPrice] = useState(item.price);
   const [warning, setWarning] = useState();
 
+  if (user && user.username !== "admin") {
+    history.push("/");
+  }
+
   useEffect(() => {
     dispatch(getItem(id));
   }, [id, dispatch]);
 
-  console.log(id);
-
-  if (!item) {
-    console.log('no item');
-  } else {
-    console.log('item');
-  }
+  const handleCancel = (e) => {
+    e.preventDefault();
+    history.push("/ms");
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -65,12 +67,12 @@ function EditItemPage() {
       !quantity ||
       !price
     ) {
-      setWarning('Something missed');
+      setWarning("Something missed");
     } else {
       dispatch(
         updateItem(id, itemName, description, itemTag, picture, quantity, price)
       ).then(() => {
-        history.push('/ms');
+        history.push("/ms");
       });
     }
   };
@@ -82,13 +84,13 @@ function EditItemPage() {
   return (
     <PageContainer>
       <BackButton
-        bgColor={'black'}
-        direction={'left'}
-        color={'#fff'}
+        bgColor={"black"}
+        direction={"left"}
+        color={"#fff"}
         handleClick={goToPreviousPath}
       />
       <Form large>
-        <Logo as={Link} to={'/'}>
+        <Logo as={Link} to={"/"}>
           TOYS
         </Logo>
         <H2>Edit Item</H2>
@@ -158,10 +160,14 @@ function EditItemPage() {
         {warning && <AlertText>{warning}</AlertText>}
 
         <FlexWrapper center>
-          <ActionButton color={'secondary'} content={'Cnacel'} />
           <ActionButton
-            color={'primary'}
-            content={'Save'}
+            color={"secondary"}
+            content={"Cnacel"}
+            onClick={handleCancel}
+          />
+          <ActionButton
+            color={"primary"}
+            content={"Save"}
             onClick={handleSubmit}
           />
         </FlexWrapper>

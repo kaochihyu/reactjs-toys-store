@@ -12,9 +12,9 @@ import ItemPage from './page/ItemPage';
 import CartPage from './page/CartPage';
 import MsPage from './page/MsPage';
 import AddItemPage from './page/AddItemPage';
-import EditItemPage from './page/EditItemPage';
 import { getAuthToken } from './utils';
 import { getUser } from './redux/reducer/userSlice';
+import { getItems } from './redux/reducer/itemSlice';
 
 function App() {
   const token = getAuthToken();
@@ -22,10 +22,13 @@ function App() {
   const isLoadingUser = useSelector((store) => store.user.isLoadingUser);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    dispatch(getItems());
     if (token) {
       dispatch(getUser());
     }
   }, [token, dispatch]);
+
   return (
     <>
       <Theme>
@@ -56,9 +59,6 @@ function App() {
             </Route>
             <Route exact path="/addItem">
               <AddItemPage />
-            </Route>
-            <Route exact path="/editItem/:id">
-              <EditItemPage />
             </Route>
           </Switch>
         </Router>

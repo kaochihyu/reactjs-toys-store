@@ -1,17 +1,18 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
-import { Container } from '../components/Container';
-import { H1, H3, P, AlertText } from '../components/Text';
-import { Count } from '../components/Count';
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { Container } from "../components/Container";
+import { H1, H3, P, AlertText } from "../components/Text";
+import { Count } from "../components/Count";
 import {
   ActionButton,
   StyledActionButton,
   DeleteButton,
-} from '../components/Button';
-import { Footer } from '../components/Footer';
-import { setCartItems } from '../redux/reducer/itemSlice';
+} from "../components/Button";
+import { Footer } from "../components/Footer";
+import { updateUserCart } from "../redux/reducer/userSlice";
+
 
 const PageContainer = styled(Container)`
   top: 5rem;
@@ -25,10 +26,6 @@ const CartList = styled.div`
 
   > * ~ * {
     margin-top: ${({ theme }) => theme.space.md};
-  }
-
-  > ${ActionButton} {
-    margin: 2.5rem auto;
   }
 
   ${({ theme }) => theme.media.md} {
@@ -136,64 +133,88 @@ const GoShoppingButton = styled(StyledActionButton)`
 `;
 
 function CartPage() {
-  const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user.user);
-  const cartItems = useSelector((store) => store.item.cartItems);
-  const itemsPrice = cartItems.reduce(
-    (a, cartItem) => a + cartItem.cart * cartItem.price,
+  const items = useSelector((store) => store.item.items);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+
+  if (!user || !items) {
+    return null;
+  }
+
+  const userCart = user.cart;
+  const cartItemsDatas = userCart.map((data) => {
+    const exist = items.find((item) => parseInt(data.id) === parseInt(item.id));
+    return {
+      ...exist,
+      cartItemNum: data.quantity,
+      warning: data.warning,
+    };
+  });
+
+  const itemsPrice = cartItemsDatas.reduce(
+    (a, cartItemsData) =>
+      a + parseInt(cartItemsData.cartItemNum) * parseInt(cartItemsData.price),
     0
   );
   const shippingPrice = itemsPrice >= 1000 || itemsPrice === 0 ? 0 : 60;
   const total = itemsPrice + shippingPrice;
 
-  if (!user) {
-    history.push('/');
-  }
-
   const handleClickMinus = (e) => {
     e.preventDefault();
     let cartData;
-    const id = parseInt(e.target.attributes.getNamedItem('data-id').value);
-    cartData = cartItems.map((cartItem) => {
-      return cartItem.id === id
+    const id = parseInt(e.target.attributes.getNamedItem("data-id").value);
+    cartData = cartItemsDatas.map((cartItemsData) => {
+      return cartItemsData.id === id
         ? {
-          ...cartItem,
-          cart: cartItem.cart <= 1 ? 1 : cartItem.cart - 1,
-          warning: '',
+          id: cartItemsData.id,
+          quantity:
+            cartItemsData.cartItemNum <= 1
+              ? 1
+              : cartItemsData.cartItemNum - 1,
+          warning: "",
         }
-        : cartItem;
+        : {
+          id: cartItemsData.id,
+          quantity: cartItemsData.cartItemNum,
+        };
     });
-
-    dispatch(setCartItems(cartData));
+    dispatch(updateUserCart(user.id, cartData));
   };
 
   const handleClickPlus = (e) => {
     e.preventDefault();
     let cartData;
-
-    const id = parseInt(e.target.attributes.getNamedItem('data-id').value);
-    cartData = cartItems.map((cartItem) => {
-      return cartItem.id === id
+    const id = parseInt(e.target.attributes.getNamedItem("data-id").value);
+    cartData = cartItemsDatas.map((cartItemsData) => {
+      return cartItemsData.id === id
         ? {
-          ...cartItem,
-          cart:
-            cartItem.cart >= cartItem.quantity
-              ? cartItem.quantity
-              : cartItem.cart + 1,
-          warning: cartItem.cart >= cartItem.quantity ? 'No more stock' : '',
+          id: cartItemsData.id,
+          quantity:
+            cartItemsData.cartItemNum >= cartItemsData.quantity
+              ? cartItemsData.quantity
+              : cartItemsData.cartItemNum + 1,
+          warning:
+            cartItemsData.cartItemNum >= cartItemsData.quantity
+              ? "No more stock"
+              : "",
         }
-        : cartItem;
+        : {
+          id: cartItemsData.id,
+          quantity: cartItemsData.cartItemNum,
+        };
     });
-
-    dispatch(setCartItems(cartData));
+    dispatch(updateUserCart(user.id, cartData));
   };
 
   const handleDelete = (e) => {
     let cartData;
-    const id = parseInt(e.target.attributes.getNamedItem('data-id').value);
-    cartData = cartItems.filter((cartItem) => cartItem.id !== id);
-    dispatch(setCartItems(cartData));
+    const id = parseInt(e.target.attributes.getNamedItem("data-id").value);
+    cartData = userCart.filter((data) => parseInt(data.id) !== parseInt(id));
+    dispatch(updateUserCart(user.id, cartData));
   };
 
   return (
@@ -201,47 +222,50 @@ function CartPage() {
       {user ? <H1>{user.nickname}'s Cart</H1> : <H1>My Cart</H1>}
 
       <CartList>
-        {cartItems.length === 0 && (
+        {cartItemsDatas.length === 0 && (
           <EmptyCart>
             <H1>Cart is Empty</H1>
-            <GoShoppingButton as={Link} to={'/shop'}>
+            <GoShoppingButton as={Link} to={"/shop"}>
               Go Shopping
             </GoShoppingButton>
           </EmptyCart>
         )}
-        {cartItems.map((cartItem) => (
-          <CartItem key={cartItem.id}>
-            <ItemContent as={Link} to={`/item/${cartItem.id}`}>
+        {cartItemsDatas.map((cartItemsData) => (
+          <CartItem key={cartItemsData.id}>
+            <ItemContent as={Link} to={`/item/${cartItemsData.id}`}>
               <img
-                src={cartItem.picture}
-                alt={cartItem.name}
+                src={cartItemsData.picture}
+                alt={cartItemsData.name}
                 as={Link}
-                to={`/item/${cartItem.id}`}
+                to={`/item/${cartItemsData.id}`}
               />
               <ItemDescription>
-                <P>{cartItem.name}</P>
-                <P>${cartItem.price}</P>
+                <P>{cartItemsData.name}</P>
+                <P>${cartItemsData.price}</P>
               </ItemDescription>
             </ItemContent>
             <ItemAction>
               <Count
                 num={
-                  cartItem.cart >= cartItem.quantity
-                    ? cartItem.quantity
-                    : cartItem.cart
+                  parseInt(cartItemsData.cartItemNum) >=
+                    parseInt(cartItemsData.quantity)
+                    ? cartItemsData.quantity
+                    : cartItemsData.cartItemNum
                 }
                 handleClickPlus={handleClickPlus}
                 handleClickMinus={handleClickMinus}
-                dataId={cartItem.id}
+                dataId={cartItemsData.id}
               />
-              <P>${cartItem.cart * cartItem.price}</P>
-              <DeleteButton onClick={handleDelete} dataId={cartItem.id} />
-              {cartItem.warning && <AlertText>{cartItem.warning}</AlertText>}
+              <P>${cartItemsData.cartItemNum * cartItemsData.price}</P>
+              <DeleteButton onClick={handleDelete} dataId={cartItemsData.id} />
+              {cartItemsData.warning && (
+                <AlertText>{cartItemsData.warning}</AlertText>
+              )}
             </ItemAction>
           </CartItem>
         ))}
       </CartList>
-      {cartItems.length !== 0 && (
+      {cartItemsDatas.length !== 0 && (
         <CheckOut>
           <Total>
             <P>Items Price ${itemsPrice}</P>
@@ -249,7 +273,7 @@ function CartPage() {
             <H3>Total Price</H3>
             <H3>${total}</H3>
           </Total>
-          <ActionButton content={'Check out'} color={'primary'} />
+          <ActionButton content={"Check out"} color={"primary"} />
         </CheckOut>
       )}
       <Footer />

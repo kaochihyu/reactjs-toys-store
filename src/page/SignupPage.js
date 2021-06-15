@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Link, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { H2 } from '../components/Text';
-import { ArrowButton, ActionButton } from '../components/Button';
-import { Form, FormItem, FormInput, Note } from '../components/Form';
-import { register } from '../redux/reducer/userSlice';
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { H2 } from "../components/Text";
+import { ArrowButton, ActionButton } from "../components/Button";
+import { Form, FormItem, FormInput, Note } from "../components/Form";
+import { register } from "../redux/reducer/userSlice";
 
 const Logo = styled(Link)`
   color: #fff;
-  font-family: 'Patua One', cursive;
+  font-family: "Patua One", cursive;
   font-size: ${({ theme }) => theme.fontSizes.md};
 `;
 
@@ -34,23 +34,27 @@ const BackButton = styled(ArrowButton)`
 
 function SignupPage() {
   const history = useHistory();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [warning, setWarning] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [warning, setWarning] = useState("");
   const dispatch = useDispatch();
   const errorMessage = useSelector((store) => store.user.errorMessage);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+
   const handleSubmit = (e) => {
-    setWarning('');
+    setWarning("");
     e.preventDefault();
     if (!username || !password || !nickname) {
-      setWarning('Something missed');
+      setWarning("Something missed");
       return;
     }
     dispatch(register(username, password, nickname)).then((res) => {
       if (res) {
-        history.push('/');
+        history.push("/");
       }
     });
   };
@@ -61,13 +65,13 @@ function SignupPage() {
   return (
     <PageContainer>
       <BackButton
-        bgColor={'white'}
-        direction={'left'}
-        color={'#000'}
+        bgColor={"white"}
+        direction={"left"}
+        color={"#000"}
         handleClick={goToPreviousPath}
       />
       <Form onSubmit={handleSubmit}>
-        <Logo as={Link} to={'/'}>
+        <Logo as={Link} to={"/"}>
           TOYS
         </Logo>
         <H2>Member Signup</H2>
@@ -100,9 +104,9 @@ function SignupPage() {
         </FormItem>
         {warning && <Note>{warning}</Note>}
         {errorMessage && <Note>{errorMessage}</Note>}
-        <ActionButton color={'secondary'} content={'Sign up'} />
+        <ActionButton color={"secondary"} content={"Sign up"} />
         <Note>
-          Already have an account ? <Link to={'/login'}>Login</Link>
+          Already have an account ? <Link to={"/login"}>Login</Link>
         </Note>
       </Form>
     </PageContainer>

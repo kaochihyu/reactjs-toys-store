@@ -1,9 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { setAuthToken } from '../../utils';
-import { registerAPI, loginAPI, getMeAPI } from '../../WebAPI';
+import { createSlice } from "@reduxjs/toolkit";
+import { setAuthToken } from "../../utils";
+import { registerAPI, loginAPI, getMeAPI, updateCartAPI } from "../../WebAPI";
 
 const userReducer = createSlice({
-  name: 'user',
+  name: "user",
   initialState: {
     isLoadingUser: false,
     user: null,
@@ -48,14 +48,12 @@ export const register = (username, password, nickname) => (dispatch) =>
 
 export const login = (username, password) => (dispatch) =>
   loginAPI(username, password).then((resLogin) => {
-    console.log(resLogin)
     if (resLogin.ok === 0) {
       dispatch(setErrorMessage(resLogin.message));
       return;
     }
     setAuthToken(resLogin.token);
     return getMeAPI().then((resMe) => {
-      console.log("login", resMe)
       if (resMe.ok !== 1) {
         setAuthToken(null);
         dispatch(setErrorMessage(resMe.toString()));
@@ -73,6 +71,15 @@ export const getUser = () => (dispatch) => {
       dispatch(setUser(res.data));
       dispatch(setIsLoadingUser(false));
     }
+  });
+};
+
+export const updateUserCart = (id, cart) => (dispatch) => {
+  dispatch(setIsLoadingUser(true));
+  return updateCartAPI(id, cart).then((res) => {
+    dispatch(setUser(res));
+    dispatch(setIsLoadingUser(false));
+    return res;
   });
 };
 
