@@ -7,7 +7,8 @@ import { H1, H3, AlertText } from '../components/Text';
 import { Count } from '../components/Count';
 import { ActionButton, FlexWrapper } from '../components/Button';
 import { Footer } from '../components/Footer';
-import { getItem, setCartItems } from '../redux/reducer/itemSlice';
+import { getItem } from '../redux/reducer/itemSlice';
+import { updateUserCart } from '../redux/reducer/userSlice';
 
 const PageContainer = styled(Container)`
   position: absolute;
@@ -66,7 +67,6 @@ function ItemPage() {
   const dispatch = useDispatch();
   const item = useSelector((store) => store.item.item);
   const user = useSelector((store) => store.user.user);
-  const cartItems = useSelector((store) => store.item.cartItems);
 
   useEffect(() => {
     dispatch(getItem(id));
@@ -78,28 +78,25 @@ function ItemPage() {
     if (!user) {
       history.push('/login');
     }
-
     let cartData;
-    const exist = cartItems.find((cartItem) => cartItem.id === parseInt(id));
+    const cartItems = user.cart
+    const exist = cartItems.find((cartItem) => parseInt(cartItem.id) === parseInt(id));
     if (!exist) {
-      console.log('not exist');
-      cartData = [...cartItems, { ...item, cart: num }];
-      dispatch(setCartItems(cartData));
+      cartData = [...cartItems, { id: id, quantity: num }];
+      dispatch(updateUserCart(user.id, cartData));
     } else {
-      console.log(num);
       cartData = cartItems.map((cartItem) => {
-        console.log(cartItem.cart);
-        return cartItem.id === parseInt(id)
+        return parseInt(cartItem.id) === parseInt(id)
           ? {
             ...exist,
-            cart:
-              cartItem.cart >= cartItem.quantity - 1
-                ? cartItem.quantity
-                : parseInt(cartItem.cart) + parseInt(num),
+            quantity:
+              parseInt(cartItem.quantity) >= parseInt(item.quantity) - 1
+                ? parseInt(item.quantity)
+                : parseInt(cartItem.quantity) + parseInt(num)
           }
           : cartItem;
       });
-      dispatch(setCartItems(cartData));
+      dispatch(updateUserCart(user.id, cartData));
     }
   };
 

@@ -1,6 +1,6 @@
-import { getAuthToken } from './utils';
-const BASE_URL = 'https://toys-store-json-server.herokuapp.com';
-// const BASE_URL = 'http://localhost:8000';
+import { getAuthToken } from "./utils";
+// const BASE_URL = 'https://toys-store-json-server.herokuapp.com';
+const BASE_URL = "http://localhost:8000";
 
 export const getItemsAPI = () => {
   return fetch(`${BASE_URL}/items`).then((res) => res.json());
@@ -12,9 +12,9 @@ export const getItemAPI = (id) => {
 
 export const registerAPI = (username, password, nickname) => {
   return fetch(`${BASE_URL}/register`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'content-type': 'application/json',
+      "content-type": "application/json",
     },
     body: JSON.stringify({
       username,
@@ -26,9 +26,9 @@ export const registerAPI = (username, password, nickname) => {
 
 export const loginAPI = (username, password) => {
   return fetch(`${BASE_URL}/login`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'content-type': 'application/json',
+      "content-type": "application/json",
     },
     body: JSON.stringify({
       username,
@@ -55,9 +55,9 @@ export const addItemAPI = (
   price
 ) => {
   return fetch(`${BASE_URL}/items`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'content-type': 'application/json',
+      "content-type": "application/json",
     },
     body: JSON.stringify({
       name,
@@ -72,9 +72,9 @@ export const addItemAPI = (
 
 export const deleteItemAPI = (id) => {
   return fetch(`${BASE_URL}/items/${id}`, {
-    method: 'DELETE',
+    method: "DELETE",
     headers: {
-      'content-type': 'application/json',
+      "content-type": "application/json",
     },
   }).then((res) => res.json());
 };
@@ -89,9 +89,9 @@ export const updateItemAPI = (
   price
 ) => {
   return fetch(`${BASE_URL}/items/${id}`, {
-    method: 'PATCH',
+    method: "PATCH",
     headers: {
-      'content-type': 'application/json',
+      "content-type": "application/json",
     },
     body: JSON.stringify({
       name,
@@ -101,5 +101,15 @@ export const updateItemAPI = (
       quantity,
       price,
     }),
+  }).then((res) => res.json());
+};
+
+export const updateCartAPI = (id, cart) => {
+  return fetch(`${BASE_URL}/users/${id}`, {
+    method: "PATCH",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ cart }),
   }).then((res) => res.json());
 };

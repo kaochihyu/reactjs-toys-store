@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { Container } from '../components/Container';
-import { Search, SearchBar } from '../components/Search';
-import { H2, H3, P } from '../components/Text';
-import { GoButton, GoToTopButton } from '../components/Button';
-import { Footer } from '../components/Footer';
-import { getItems } from '../redux/reducer/itemSlice';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { Container } from "../components/Container";
+import { Search, SearchBar } from "../components/Search";
+import { H2, H3, P } from "../components/Text";
+import { GoButton, GoToTopButton } from "../components/Button";
+import { Footer } from "../components/Footer";
+import { getItems } from "../redux/reducer/itemSlice";
 
 const PageContainer = styled(Container)`
   position: absolute;
@@ -58,6 +58,7 @@ function ShopPage() {
   const items = useSelector((store) => store.item.items);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     dispatch(getItems());
   }, [dispatch]);
 
@@ -96,9 +97,9 @@ function ShopPage() {
                 <P>{data.tag}</P>
                 <H2>${data.price}</H2>
                 <GoButton
-                  content={'SEE MORE'}
+                  content={"SEE MORE"}
                   route={`/item/${data.id}`}
-                  letter_sp={'small'}
+                  letter_sp={"small"}
                 />
               </ItemContent>
             </Item>

@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Link, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { H2, AlertText } from '../components/Text';
-import { ArrowButton, ActionButton, FlexWrapper } from '../components/Button';
-import { Form, FormItem, FormInput } from '../components/Form';
-import { addItem } from '../redux/reducer/itemSlice';
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { H2, AlertText } from "../components/Text";
+import { ArrowButton, ActionButton, FlexWrapper } from "../components/Button";
+import { Form, FormItem, FormInput } from "../components/Form";
+import { addItem } from "../redux/reducer/itemSlice";
 
 const Logo = styled(Link)`
   color: #000;
-  font-family: 'Patua One', cursive;
+  font-family: "Patua One", cursive;
   font-size: ${({ theme }) => theme.fontSizes.md};
 `;
 
@@ -32,23 +32,27 @@ const BackButton = styled(ArrowButton)`
 
 function AddItemPage() {
   const history = useHistory();
-  const [itemName, setItemName] = useState('');
-  const [description, setDescription] = useState('');
-  const [itemTag, setItemTag] = useState('');
-  const [picture, setPicture] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [price, setPrice] = useState('');
+  const [itemName, setItemName] = useState("");
+  const [description, setDescription] = useState("");
+  const [itemTag, setItemTag] = useState("");
+  const [picture, setPicture] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [price, setPrice] = useState("");
   const [warning, setWarning] = useState();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user.user);
 
-  if (user && user.username !== 'admin') {
-    history.push('/');
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+
+  if (user && user.username !== "admin") {
+    history.push("/");
   }
 
   const handleCancel = (e) => {
     e.preventDefault();
-    history.push('/ms');
+    history.push("/ms");
   };
 
   const handleSubmit = (e) => {
@@ -61,12 +65,12 @@ function AddItemPage() {
       !quantity ||
       !price
     ) {
-      setWarning('Something missed');
+      setWarning("Something missed");
     } else {
       dispatch(
         addItem(itemName, description, itemTag, picture, quantity, price)
       ).then(() => {
-        history.push('/ms');
+        history.push("/ms");
       });
     }
   };
@@ -78,13 +82,13 @@ function AddItemPage() {
   return (
     <PageContainer>
       <BackButton
-        bgColor={'black'}
-        direction={'left'}
-        color={'#fff'}
+        bgColor={"black"}
+        direction={"left"}
+        color={"#fff"}
         handleClick={goToPreviousPath}
       />
       <Form large>
-        <Logo as={Link} to={'/'}>
+        <Logo as={Link} to={"/"}>
           TOYS
         </Logo>
         <H2>Add New Item</H2>
@@ -134,7 +138,7 @@ function AddItemPage() {
             <label htmlFor="quantity">Quantity</label>
             <FormInput
               primary
-              type="text"
+              type="number"
               id="quantity"
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
@@ -144,7 +148,7 @@ function AddItemPage() {
             <label htmlFor="price">Price</label>
             <FormInput
               primary
-              type="text"
+              type="number"
               id="price"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
@@ -155,13 +159,13 @@ function AddItemPage() {
 
         <FlexWrapper center>
           <ActionButton
-            color={'secondary'}
-            content={'Cnacel'}
+            color={"secondary"}
+            content={"Cnacel"}
             onClick={handleCancel}
           />
           <ActionButton
-            color={'primary'}
-            content={'Save'}
+            color={"primary"}
+            content={"Save"}
             onClick={handleSubmit}
           />
         </FlexWrapper>

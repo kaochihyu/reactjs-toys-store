@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Link, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { H2 } from '../components/Text';
-import { ArrowButton, ActionButton } from '../components/Button';
-import { Form, FormItem, FormInput, Note } from '../components/Form';
-import { login } from '../redux/reducer/userSlice';
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { H2 } from "../components/Text";
+import { ArrowButton, ActionButton } from "../components/Button";
+import { Form, FormItem, FormInput, Note } from "../components/Form";
+import { login } from "../redux/reducer/userSlice";
 
 const Logo = styled(Link)`
   color: #fff;
-  font-family: 'Patua One', cursive;
+  font-family: "Patua One", cursive;
   font-size: ${({ theme }) => theme.fontSizes.md};
 `;
 
@@ -32,17 +32,21 @@ const BackButton = styled(ArrowButton)`
 
 function LoginPage() {
   const history = useHistory();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [warning, setWarning] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [warning, setWarning] = useState("");
   const dispatch = useDispatch();
   const errorMessage = useSelector((store) => store.user.errorMessage);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+
   const handleSubmit = (e) => {
-    setWarning('');
+    setWarning("");
     e.preventDefault();
     if (!username || !password) {
-      setWarning('Something missed');
+      setWarning("Something missed");
       return;
     }
     dispatch(login(username, password)).then((res) => {
@@ -56,17 +60,16 @@ function LoginPage() {
     history.goBack();
   };
 
-  console.log(username, password);
   return (
     <PageContainer>
       <BackButton
-        bgColor={'white'}
-        direction={'left'}
-        color={'#000'}
+        bgColor={"white"}
+        direction={"left"}
+        color={"#000"}
         handleClick={goToPreviousPath}
       />
       <Form onSubmit={handleSubmit}>
-        <Logo as={Link} to={'/'}>
+        <Logo as={Link} to={"/"}>
           TOYS
         </Logo>
         <H2>Member Login</H2>
@@ -82,7 +85,7 @@ function LoginPage() {
         <FormItem>
           <label htmlFor="password">Password</label>
           <FormInput
-            type="text"
+            type="password"
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -90,9 +93,9 @@ function LoginPage() {
         </FormItem>
         {warning && <Note>{warning}</Note>}
         {errorMessage && <Note>{errorMessage}</Note>}
-        <ActionButton color={'secondary'} content={'Log in'} />
+        <ActionButton color={"secondary"} content={"Log in"} />
         <Note>
-          Don't have account ? <Link to={'/signup'}>Sign Up</Link>
+          Don't have account ? <Link to={"/signup"}>Sign Up</Link>
         </Note>
       </Form>
     </PageContainer>
