@@ -40,7 +40,7 @@ function LoginPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
 
   const handleSubmit = (e) => {
     setWarning("");

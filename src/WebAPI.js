@@ -1,6 +1,6 @@
 import { getAuthToken } from "./utils";
-// const BASE_URL = 'https://toys-store-json-server.herokuapp.com';
-const BASE_URL = "http://localhost:8000";
+const BASE_URL = 'https://toys-store-json-server.herokuapp.com';
+// const BASE_URL = "http://localhost:8000";
 
 export const getItemsAPI = () => {
   return fetch(`${BASE_URL}/items`).then((res) => res.json());

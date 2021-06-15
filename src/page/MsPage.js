@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useHistory, Link } from "react-router-dom";
 import { Container } from "../components/Container";
-import { P } from "../components/Text";
+import { P, Loading } from "../components/Text";
 import {
   ActionButton,
   AddItemButton,
@@ -142,22 +142,25 @@ const ElementWrapper = styled(Container)`
 function MsPage() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState("");
   const [popup, setPopup] = useState(false);
   const items = useSelector((store) => store.item.items);
   const item = useSelector((store) => store.item.item);
   const user = useSelector((store) => store.user.user);
-
-  if (!user || user.username !== "admin") {
-    history.push("/");
-  }
+  const isLoadingItem = useSelector((store) => store.item.isLoadingItem);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(getItems());
   }, [dispatch]);
 
-  if (!items) return null;
+  if (isLoadingItem) {
+    return <Loading>Loading...</Loading>;
+  }
+
+  if (user && user.username !== "admin") {
+    history.push("/");
+  }
 
   const filterItems = (items, search) => {
     if (!search) {

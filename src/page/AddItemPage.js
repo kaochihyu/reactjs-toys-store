@@ -44,7 +44,7 @@ function AddItemPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
 
   if (user && user.username !== "admin") {
     history.push("/");

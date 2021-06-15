@@ -137,7 +137,7 @@ export const EditItemForm = ({ handleClose, item }) => {
           itemPrice
         )
       ).then(() => {
-        history.go(0);
+        history.push(`/item/${item.id}`)
       });
     }
   };

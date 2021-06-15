@@ -139,7 +139,7 @@ function CartPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
 
   if (!user || !items) {
     return null;

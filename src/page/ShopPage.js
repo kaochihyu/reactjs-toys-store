@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Container } from "../components/Container";
 import { Search, SearchBar } from "../components/Search";
-import { H2, H3, P } from "../components/Text";
+import { H2, H3, P, Loading } from "../components/Text";
 import { GoButton, GoToTopButton } from "../components/Button";
 import { Footer } from "../components/Footer";
 import { getItems } from "../redux/reducer/itemSlice";
@@ -53,16 +53,19 @@ const Blank = styled.div`
 `;
 
 function ShopPage() {
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState('');
   const dispatch = useDispatch();
   const items = useSelector((store) => store.item.items);
+  const isLoadingItem = useSelector((store) => store.item.isLoadingItem);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(getItems());
   }, [dispatch]);
 
-  if (!items) return null;
+  if (isLoadingItem) {
+    return (<Loading>Loading...</Loading>);
+  }
 
   const filterItems = (items, search) => {
     if (!search) {

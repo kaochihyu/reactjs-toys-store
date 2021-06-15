@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import GlobalStyle from './globalStyle';
 import Theme from './Theme';
 import Navbar from './components/Navbar';
@@ -19,7 +19,6 @@ import { getItems } from './redux/reducer/itemSlice';
 function App() {
   const token = getAuthToken();
   const dispatch = useDispatch();
-  const isLoadingUser = useSelector((store) => store.user.isLoadingUser);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -34,7 +33,7 @@ function App() {
       <Theme>
         <GlobalStyle />
         <Router>
-          {!isLoadingUser && <Navbar />}
+          <Navbar />
           <Switch>
             <Route exact path="/">
               <HomePage />

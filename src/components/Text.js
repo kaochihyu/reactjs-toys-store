@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const H1 = styled.h1`
   font-size: ${(props) => props.theme.fontSizes.lg};
@@ -28,4 +28,11 @@ export const Ps = styled.p`
 
 export const AlertText = styled(Ps)`
   color: red;
+`;
+
+export const Loading = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%);
 `;
