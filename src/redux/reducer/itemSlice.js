@@ -86,7 +86,6 @@ export const addItem =
     addItemAPI(itemName, description, itemTag, picture, quantity, price).then(
       (res) => {
         dispatch(setNewItemResponse(res));
-        console.log(res);
         return res;
       }
     );
@@ -110,7 +109,6 @@ export const updateItem =
       ).then((res) => {
         dispatch(setItem(res));
         dispatch(setIsLoadingItem(false));
-        console.log(res);
         return res;
       });
     };
