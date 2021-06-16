@@ -1,70 +1,59 @@
-# Getting Started with Create React App
+# Toys Store Website
+玩具購物網站，販售玩具為主的線上購物平台
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 專案簡介
+![image](https://i.imgur.com/cd34KM5.png)
+* 使用者可用功能
+  * **登入、註冊頁面**：使用者可以登入、註冊成為會員
+  * **所有商品頁面**：使用者可以瀏覽所有商品、輸入關鍵字搜尋商品
+  * **單一商品頁面**：使用者可以瀏覽單一商品資訊、添加商品至購物車
+  * **購物車頁面**：使用者可以修改商品數量、刪除購物車商品
+  
+* 管理者可用功能
+  * **管理員後台頁面**：管理者可以瀏覽所有商品資訊、修改商品資訊、刪除商品、輸入關鍵字搜尋商品
+  * **新增商品頁面**：管理者可以新增商品
 
-## Available Scripts
+## 專案架構
+[Create React App](https://github.com/facebook/create-react-app) 建立專案
+#### `npm install`
+#### `npm run start`
+在 http://localhost:3000  啟動此專案
 
-In the project directory, you can run:
+```
+reactjs-toys-store
+├── README.md
+├── node_modules
+├── package.json
+├── package-lock
+├── prettierrc
+├── .gitignore
+├── public
+│   ├── favicon.ico
+│   ├── index.html
+│   └── manifest.json
+└── src
+    ├── App.js
+    ├── globalStyle.js
+    ├── index.css
+    ├── index.js
+    ├── Theme.js
+    ├── utils.js
+    ├── WebAPI.js
+    ├── components
+    ├── image
+    ├── page
+    └── redux
+```
 
-### `npm start`
+## 使用技術
+* styled-components 撰寫可複用的 styled，支援 RWD
+* function component 搭配 react hooks 撰寫可複用的元件
+* React Router 撰寫路由實踐 SPA
+* Redux 管理網站資料
+* 串接 API 獲取資料，執行 CRUD
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### API 來源
+透過 [JSON Server](https://github.com/typicode/json-server) 製作的假 REST API
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
