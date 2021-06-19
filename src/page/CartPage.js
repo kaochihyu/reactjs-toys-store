@@ -13,7 +13,6 @@ import {
 import { Footer } from "../components/Footer";
 import { updateUserCart } from "../redux/reducer/userSlice";
 
-
 const PageContainer = styled(Container)`
   top: 5rem;
   text-align: center;
