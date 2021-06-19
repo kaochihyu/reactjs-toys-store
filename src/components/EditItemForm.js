@@ -4,35 +4,8 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { ActionButton, CloseButton, FlexWrapper } from "./Button";
 import { H3, AlertText } from "./Text";
+import { OverLay, PopupContianer } from "./Popup";
 import { updateItem } from "../redux/reducer/itemSlice";
-
-const OverLay = styled.div`
-  opacity: 1;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: linear-gradient(transparent, #444);
-  z-index: 3;
-`;
-
-const PopupContianer = styled.div`
-  position: absolute;
-  opacity: 1;
-  top: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 560px;
-  height: 500px;
-  background-color: #fff;
-  z-index: 5;
-
-  ${({ theme }) => theme.media.md} {
-    width: 100%;
-    height: 640px;
-  }
-`;
 
 const PopupForm = styled.div`
   position: absolute;
@@ -137,7 +110,8 @@ export const EditItemForm = ({ handleClose, item }) => {
           itemPrice
         )
       ).then(() => {
-        history.push(`/item/${item.id}`)
+        handleClose();
+        history.go(0);
       });
     }
   };

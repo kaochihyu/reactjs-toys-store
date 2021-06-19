@@ -97,7 +97,6 @@ export const deleteItem = (id) => (dispatch) => {
 export const updateItem =
   (itemId, itemName, description, itemTag, picture, quantity, price) =>
     (dispatch) => {
-      dispatch(setIsLoadingItem(true));
       return updateItemAPI(
         itemId,
         itemName,
@@ -108,7 +107,6 @@ export const updateItem =
         price
       ).then((res) => {
         dispatch(setItem(res));
-        dispatch(setIsLoadingItem(false));
         return res;
       });
     };

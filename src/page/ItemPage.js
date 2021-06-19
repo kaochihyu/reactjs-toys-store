@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { useHistory, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { Container } from '../components/Container';
-import { H1, H3, AlertText } from '../components/Text';
-import { Count } from '../components/Count';
-import { ActionButton, FlexWrapper } from '../components/Button';
-import { Footer } from '../components/Footer';
-import { getItem } from '../redux/reducer/itemSlice';
-import { updateUserCart } from '../redux/reducer/userSlice';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { useHistory, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Container } from "../components/Container";
+import { H1, H3, AlertText, Loading } from "../components/Text";
+import { Count } from "../components/Count";
+import { ActionButton, FlexWrapper } from "../components/Button";
+import { Footer } from "../components/Footer";
+import { getItem } from "../redux/reducer/itemSlice";
+import { updateUserCart } from "../redux/reducer/userSlice";
 
 const PageContainer = styled(Container)`
   position: absolute;
@@ -61,12 +61,13 @@ const ItemContent = styled.div`
 
 function ItemPage() {
   const [num, setNum] = useState(1);
-  const [warning, setWarning] = useState('');
+  const [warning, setWarning] = useState("");
   const { id } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
   const item = useSelector((store) => store.item.item);
   const user = useSelector((store) => store.user.user);
+  const isLoadingItem = useSelector((store) => store.item.isLoadingItem);
 
   useEffect(() => {
     dispatch(getItem(id));
@@ -74,13 +75,19 @@ function ItemPage() {
 
   if (!item) return null;
 
+  if (isLoadingItem) {
+    return <Loading>Loading...</Loading>;
+  }
+
   const handleOnAdd = () => {
     if (!user) {
-      history.push('/login');
+      history.push("/login");
     }
     let cartData;
-    const cartItems = user.cart
-    const exist = cartItems.find((cartItem) => parseInt(cartItem.id) === parseInt(id));
+    const cartItems = user.cart;
+    const exist = cartItems.find(
+      (cartItem) => parseInt(cartItem.id) === parseInt(id)
+    );
     if (!exist) {
       cartData = [...cartItems, { id: id, quantity: num }];
       dispatch(updateUserCart(user.id, cartData));
@@ -92,7 +99,7 @@ function ItemPage() {
             quantity:
               parseInt(cartItem.quantity) >= parseInt(item.quantity) - 1
                 ? parseInt(item.quantity)
-                : parseInt(cartItem.quantity) + parseInt(num)
+                : parseInt(cartItem.quantity) + parseInt(num),
           }
           : cartItem;
       });
@@ -101,7 +108,7 @@ function ItemPage() {
   };
 
   const handleClickMinus = () => {
-    setWarning('');
+    setWarning("");
     setNum(num - 1);
     if (num <= 1) {
       setNum(1);
@@ -111,14 +118,14 @@ function ItemPage() {
   const handleClickPlus = () => {
     setNum(num + 1);
     if (num >= item.quantity) {
-      setWarning('There is no more stock');
+      setWarning("There is no more stock");
       setNum(item.quantity);
     }
   };
 
   const handleBuyKnow = () => {
     handleOnAdd();
-    history.push('/cart');
+    history.push("/cart");
   };
 
   return (
@@ -138,13 +145,13 @@ function ItemPage() {
           {warning && <AlertText>{warning}</AlertText>}
           <FlexWrapper>
             <ActionButton
-              content={'Add to Cart'}
-              color={'primary'}
+              content={"Add to Cart"}
+              color={"primary"}
               onClick={handleOnAdd}
             />
             <ActionButton
-              content={'Buy Now'}
-              color={'secondary'}
+              content={"Buy Now"}
+              color={"secondary"}
               onClick={handleBuyKnow}
             />
           </FlexWrapper>
