@@ -3,6 +3,13 @@
 
 ## 專案簡介
 ![image](https://i.imgur.com/cd34KM5.png)
+
+可使用以下 username, password 進行登入，或註冊新的帳號
+|身分    |username|password|
+|-------|--------|--------|
+|管理者  |admin   |admin   |
+|使用者  |user01  |user01  |
+
 * 使用者可用功能
   * **登入、註冊頁面**：使用者可以登入、註冊成為會員
   * **所有商品頁面**：使用者可以瀏覽所有商品、輸入關鍵字搜尋商品
@@ -52,8 +59,10 @@ reactjs-toys-store
 * Redux 管理網站資料
 * 串接 API 獲取資料，執行 CRUD
 
-#### API 來源
-透過 [JSON Server](https://github.com/typicode/json-server) 製作的假 REST API
+## API 來源
+#### Toys store 的 API：https://toys-store-json-server.herokuapp.com/
+此 API 是透過 [JSON Server](https://github.com/typicode/json-server) 製作的假 REST API  
+
 
 
 
