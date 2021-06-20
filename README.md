@@ -1,5 +1,6 @@
 # Toys Store Website
 玩具購物網站，販售玩具為主的線上購物平台
+#### 👉 [網站 Demo](https://kaochihyu.github.io/reactjs-toys-store/#/)
 
 ## 專案簡介
 ![image](https://i.imgur.com/cd34KM5.png)
