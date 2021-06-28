@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 
 const Operation = styled.button`
@@ -41,4 +42,11 @@ export const Count = (props) => {
       </Operation>
     </StyledCount>
   );
+};
+
+Count.propTypes = {
+  num: PropTypes.number,
+  handleClickPlus: PropTypes.func,
+  handleClickMinus: PropTypes.func,
+  dataId: PropTypes.number,
 };

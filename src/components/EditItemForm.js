@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { ActionButton, CloseButton, FlexWrapper } from "./Button";
-import { H3, AlertText } from "./Text";
-import { OverLay, PopupContianer } from "./Popup";
-import { updateItem } from "../redux/reducer/itemSlice";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { ActionButton, CloseButton, FlexWrapper } from './Button';
+import { H3, AlertText } from './Text';
+import { OverLay, PopupContianer } from './Popup';
+import { updateItem } from '../redux/reducer/itemSlice';
 
 const PopupForm = styled.div`
   position: absolute;
@@ -97,7 +98,7 @@ export const EditItemForm = ({ handleClose, item }) => {
       !itemQuantity ||
       !itemPrice
     ) {
-      setWarning("Something missed");
+      setWarning('Something missed');
     } else {
       dispatch(
         updateItem(
@@ -187,13 +188,13 @@ export const EditItemForm = ({ handleClose, item }) => {
           </ItemList>
           <FlexWrapper center>
             <ActionButton
-              color={"secondary"}
-              content={"Cnacel"}
+              color={'secondary'}
+              content={'Cnacel'}
               onClick={handleClose}
             />
             <ActionButton
-              color={"primary"}
-              content={"Save"}
+              color={'primary'}
+              content={'Save'}
               onClick={handleSubmit}
             />
           </FlexWrapper>
@@ -201,4 +202,9 @@ export const EditItemForm = ({ handleClose, item }) => {
       </PopupContianer>
     </>
   );
+};
+
+EditItemForm.propTypes = {
+  handleClose: PropTypes.func,
+  item: PropTypes.object,
 };

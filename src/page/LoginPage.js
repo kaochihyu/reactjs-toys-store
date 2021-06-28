@@ -95,7 +95,7 @@ function LoginPage() {
         {errorMessage && <Note>{errorMessage}</Note>}
         <ActionButton color={"secondary"} content={"Log in"} />
         <Note>
-          Don't have account ? <Link to={"/signup"}>Sign Up</Link>
+          Don&apos;t have account ? <Link to={"/signup"}>Sign Up</Link>
         </Note>
       </Form>
     </PageContainer>
