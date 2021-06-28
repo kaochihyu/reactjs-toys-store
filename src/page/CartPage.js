@@ -218,7 +218,7 @@ function CartPage() {
 
   return (
     <PageContainer>
-      {user ? <H1>{user.nickname}'s Cart</H1> : <H1>My Cart</H1>}
+      {user ? <H1>{user.nickname}&apos;s Cart</H1> : <H1>My Cart</H1>}
 
       <CartList>
         {cartItemsDatas.length === 0 && (

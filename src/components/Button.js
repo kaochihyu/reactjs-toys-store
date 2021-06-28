@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import {
   RiArrowLeftSLine,
@@ -120,6 +121,12 @@ export const GoButton = ({ content, route, letter_sp }) => {
   );
 };
 
+GoButton.propTypes = {
+  content: PropTypes.string,
+  route: PropTypes.string,
+  letter_sp: PropTypes.string,
+};
+
 export const ArrowButton = ({ bgColor, color, direction, handleClick }) => {
   return (
     <StyledArrowButton bgColor={bgColor} onClick={handleClick}>
@@ -132,6 +139,13 @@ export const ArrowButton = ({ bgColor, color, direction, handleClick }) => {
   );
 };
 
+ArrowButton.propTypes = {
+  bgColor: PropTypes.string,
+  color: PropTypes.string,
+  direction: PropTypes.string,
+  handleClick: PropTypes.func,
+};
+
 export const CloseButton = ({ handleClick }) => {
   return (
     <StyledCloseButton onClick={handleClick}>
@@ -140,12 +154,23 @@ export const CloseButton = ({ handleClick }) => {
   );
 };
 
+CloseButton.propTypes = {
+  handleClick: PropTypes.func,
+};
+
 export const ActionButton = ({ color, content, onClick, data }) => {
   return (
     <StyledActionButton color={color} onClick={onClick} data-id={data}>
       <H3 data-id={data}>{content}</H3>
     </StyledActionButton>
   );
+};
+
+ActionButton.propTypes = {
+  color: PropTypes.string,
+  content: PropTypes.string,
+  onClick: PropTypes.func,
+  data: PropTypes.number,
 };
 
 export const GoToTopButton = () => {
@@ -166,4 +191,9 @@ export const DeleteButton = ({ onClick, dataId }) => {
       +
     </StyledDeleteButton>
   );
+};
+
+DeleteButton.propTypes = {
+  onClick: PropTypes.func,
+  dataId: PropTypes.number,
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { Container } from '../components/Container';
 
@@ -38,4 +39,9 @@ export const Search = ({ value, onChange }) => {
       <AiOutlineSearch size={24} />
     </StyledSearch>
   );
+};
+
+Search.propTypes = {
+  value: PropTypes.string,
+  onChange: PropTypes.func
 };

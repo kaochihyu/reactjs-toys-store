@@ -1,5 +1,6 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
+import PropTypes from 'prop-types';
 
 const theme = {
   colors: {
@@ -29,11 +30,15 @@ const theme = {
     sm: '@media(max-width: 40rem)',
     md: '@media (max-width: 48rem)',
     lg: '@media (max-width: 64rem)',
-  }
-}
+  },
+};
 
 const Theme = ({ children }) => (
   <ThemeProvider theme={theme}>{children}</ThemeProvider>
 );
 
 export default Theme;
+
+Theme.propTypes = {
+  children: PropTypes.node.isRequired,
+};

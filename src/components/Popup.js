@@ -1,6 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import { CloseButton, ActionButton, FlexWrapper } from "./Button";
+import React from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import { CloseButton, ActionButton, FlexWrapper } from './Button';
 
 export const OverLay = styled.div`
   opacity: 1;
@@ -30,7 +31,12 @@ export const PopupContianer = styled.div`
   }
 `;
 
-export const Popup = ({ content, handleClose, handleSubmit, submitContent }) => {
+export const Popup = ({
+  content,
+  handleClose,
+  handleSubmit,
+  submitContent,
+}) => {
   return (
     <>
       <OverLay />
@@ -39,17 +45,24 @@ export const Popup = ({ content, handleClose, handleSubmit, submitContent }) => 
         {content}
         <FlexWrapper center>
           <ActionButton
-            color={"secondary"}
-            content={"Cnacel"}
+            color={'secondary'}
+            content={'Cnacel'}
             onClick={handleClose}
           />
           <ActionButton
-            color={"primary"}
+            color={'primary'}
             content={submitContent}
             onClick={handleSubmit}
           />
         </FlexWrapper>
       </PopupContianer>
     </>
-  )
-}
+  );
+};
+
+Popup.propTypes = {
+  content: PropTypes.string,
+  handleClose: PropTypes.func,
+  handleSubmit: PropTypes.func,
+  submitContent: PropTypes.string,
+};
