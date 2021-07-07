@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/reactjs-toys-store/static/css/main.2afdc478.chunk.css",
-    "main.js": "/reactjs-toys-store/static/js/main.ce62727d.chunk.js",
-    "main.js.map": "/reactjs-toys-store/static/js/main.ce62727d.chunk.js.map",
+    "main.js": "/reactjs-toys-store/static/js/main.fa1c2590.chunk.js",
+    "main.js.map": "/reactjs-toys-store/static/js/main.fa1c2590.chunk.js.map",
     "runtime-main.js": "/reactjs-toys-store/static/js/runtime-main.1ee5cf93.js",
     "runtime-main.js.map": "/reactjs-toys-store/static/js/runtime-main.1ee5cf93.js.map",
-    "static/js/2.cb6e4362.chunk.js": "/reactjs-toys-store/static/js/2.cb6e4362.chunk.js",
-    "static/js/2.cb6e4362.chunk.js.map": "/reactjs-toys-store/static/js/2.cb6e4362.chunk.js.map",
+    "static/js/2.03cac1f1.chunk.js": "/reactjs-toys-store/static/js/2.03cac1f1.chunk.js",
+    "static/js/2.03cac1f1.chunk.js.map": "/reactjs-toys-store/static/js/2.03cac1f1.chunk.js.map",
     "index.html": "/reactjs-toys-store/index.html",
     "static/css/main.2afdc478.chunk.css.map": "/reactjs-toys-store/static/css/main.2afdc478.chunk.css.map",
-    "static/js/2.cb6e4362.chunk.js.LICENSE.txt": "/reactjs-toys-store/static/js/2.cb6e4362.chunk.js.LICENSE.txt",
+    "static/js/2.03cac1f1.chunk.js.LICENSE.txt": "/reactjs-toys-store/static/js/2.03cac1f1.chunk.js.LICENSE.txt",
     "static/media/about_1.9a4cc310.jpg": "/reactjs-toys-store/static/media/about_1.9a4cc310.jpg",
     "static/media/about_2.ffe5a107.jpg": "/reactjs-toys-store/static/media/about_2.ffe5a107.jpg",
     "static/media/hero_1.9e339fc1.jpg": "/reactjs-toys-store/static/media/hero_1.9e339fc1.jpg",
@@ -19,8 +19,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.1ee5cf93.js",
-    "static/js/2.cb6e4362.chunk.js",
+    "static/js/2.03cac1f1.chunk.js",
     "static/css/main.2afdc478.chunk.css",
-    "static/js/main.ce62727d.chunk.js"
+    "static/js/main.fa1c2590.chunk.js"
   ]
 }
