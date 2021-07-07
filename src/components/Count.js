@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
+// import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 
 const Operation = styled.button`
   width: 40px;
+  font-size: 1.25rem;
+  color: ${(props) => props.color};
 `;
 
 const StyledCount = styled.div`
@@ -19,7 +21,6 @@ const StyledCount = styled.div`
   > * {
     width: 40px;
     height: 40px;
-    padding: 10px;
     text-align: center;
   }
 
@@ -28,17 +29,25 @@ const StyledCount = styled.div`
   }
 `;
 
+const CountNum = styled.div`
+  padding: 10px;
+`;
+
 export const Count = (props) => {
   const { num, handleClickPlus, handleClickMinus, dataId } = props;
 
   return (
     <StyledCount>
-      <Operation data-id={dataId} onClick={handleClickMinus}>
-        <AiOutlineMinus data-id={dataId} />
+      <Operation
+        data-id={dataId}
+        onClick={handleClickMinus}
+        color={num == 1 ? '#ccc' : '#000'}
+      >
+        &#8722;
       </Operation>
-      <div>{num}</div>
+      <CountNum>{num}</CountNum>
       <Operation data-id={dataId} onClick={handleClickPlus}>
-        <AiOutlinePlus data-id={dataId} />
+        &#43;
       </Operation>
     </StyledCount>
   );
