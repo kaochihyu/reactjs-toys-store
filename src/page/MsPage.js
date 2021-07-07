@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import { useHistory, Link } from "react-router-dom";
-import { Container } from "../components/Container";
-import { P, Loading } from "../components/Text";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { useHistory, Link } from 'react-router-dom';
+import { Container } from '../components/Container';
+import { P, Loading } from '../components/Text';
 import {
   ActionButton,
   AddItemButton,
   GoToTopButton,
-} from "../components/Button";
-import { Search } from "../components/Search";
-import { EditItemForm } from "../components/EditItemForm";
-import { useDispatch, useSelector } from "react-redux";
-import { getItems, getItem, deleteItem } from "../redux/reducer/itemSlice";
+} from '../components/Button';
+import { Search } from '../components/Search';
+import { EditItemForm } from '../components/EditItemForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { getItems, getItem, deleteItem } from '../redux/reducer/itemSlice';
 
 const PageContainer = styled(Container)`
   top: 9rem;
@@ -86,7 +86,7 @@ const ItemContent = styled.div`
 
   > p:nth-child(1),
   p:nth-child(4) {
-    width: 8%;
+    width: 10%;
   }
 
   ${({ theme }) => theme.media.md} {
@@ -95,7 +95,10 @@ const ItemContent = styled.div`
     gap: 0.625rem;
     padding: 10px;
 
-    > p {
+    > p:nth-child(1),
+    p:nth-child(2),
+    p:nth-child(3),
+    p:nth-child(4) {
       width: initial;
     }
   }
@@ -142,7 +145,7 @@ const ElementWrapper = styled(Container)`
 function MsPage() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [popup, setPopup] = useState(false);
   const items = useSelector((store) => store.item.items);
   const item = useSelector((store) => store.item.item);
@@ -158,8 +161,8 @@ function MsPage() {
     return <Loading>Loading...</Loading>;
   }
 
-  if (user && user.username !== "admin") {
-    history.push("/");
+  if (user && user.username !== 'admin') {
+    history.push('/');
   }
 
   const filterItems = (items, search) => {
@@ -184,12 +187,12 @@ function MsPage() {
 
   const handleDelete = (e) => {
     e.preventDefault();
-    const id = e.target.attributes.getNamedItem("data-id").value;
+    const id = e.target.attributes.getNamedItem('data-id').value;
     dispatch(deleteItem(id)).then(() => history.go(0));
   };
 
   const handelEdit = (e) => {
-    const id = e.target.attributes.getNamedItem("data-id").value;
+    const id = e.target.attributes.getNamedItem('data-id').value;
     dispatch(getItem(id)).then(() => setPopup(true));
   };
 
@@ -200,7 +203,7 @@ function MsPage() {
   return (
     <>
       <ElementWrapper>
-        <Link to={"/addItem"}>
+        <Link to={'/addItem'}>
           <AddItemButton>Add Item +</AddItemButton>
         </Link>
         <Search value={search} onChange={(e) => setSearch(e.target.value)} />
@@ -220,14 +223,14 @@ function MsPage() {
                 <P>${data.price}</P>
                 <Buttons>
                   <ActionButton
-                    content={"Edit"}
-                    color={"secondary"}
+                    content={'Edit'}
+                    color={'secondary'}
                     onClick={handelEdit}
                     data={data.id}
                   />
                   <ActionButton
-                    content={"Delete"}
-                    color={"primary"}
+                    content={'Delete'}
+                    color={'primary'}
                     onClick={handleDelete}
                     data={data.id}
                   />
