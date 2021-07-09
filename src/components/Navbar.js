@@ -165,7 +165,7 @@ function Navbar() {
   }
 
   const changeBackgroundColor = () => {
-    if (window.scrollY >= 80) {
+    if (window.scrollY > 0) {
       setScroll(true);
     } else {
       setScroll(false);

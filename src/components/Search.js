@@ -27,6 +27,23 @@ export const SearchBar = styled(Container)`
   }
 `;
 
+export const ElementWrapper = styled(Container)`
+  position: fixed;
+  top: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: ${({ theme }) => theme.space.sm};
+  padding-bottom: ${({ theme }) => theme.space.sm};
+  background-color: ${({ theme }) => theme.colors.white};
+  z-index: 1;
+  ${({ theme }) => theme.media.sm} {
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+  }
+`;
+
 export const Search = ({ value, onChange }) => {
   return (
     <StyledSearch>

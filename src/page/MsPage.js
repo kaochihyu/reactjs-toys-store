@@ -170,15 +170,16 @@ function MsPage() {
       return items;
     }
     return items.filter((item) => {
+      const searched = search.toLowerCase();
       const itemId = item.id.toString();
       const itemName = item.name.toLowerCase();
       const itemPrice = item.price.toLowerCase();
       const itemStock = item.quantity.toLowerCase();
       return (
-        itemId.includes(search) ||
-        itemName.includes(search) ||
-        itemPrice.includes(search) ||
-        itemStock.includes(search)
+        itemId.includes(searched) ||
+        itemName.includes(searched) ||
+        itemPrice.includes(searched) ||
+        itemStock.includes(searched)
       );
     });
   };
