@@ -12,21 +12,6 @@ const StyledSearch = styled.div`
   border-bottom: 0.125rem solid #000;
 `;
 
-export const SearchBar = styled(Container)`
-  position: fixed;
-  top: 80px;
-  z-index: 1;
-  display: flex;
-  justify-content: flex-end;
-  padding-top: ${({ theme }) => theme.space.sm};
-  padding-bottom: ${({ theme }) => theme.space.sm};
-  background-color: #fff;
-
-  ${({ theme }) => theme.media.md} {
-    justify-content: center;
-  }
-`;
-
 export const ElementWrapper = styled(Container)`
   position: fixed;
   top: 80px;
