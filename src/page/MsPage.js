@@ -8,7 +8,7 @@ import {
   AddItemButton,
   GoToTopButton,
 } from '../components/Button';
-import { Search } from '../components/Search';
+import { Search, ElementWrapper } from '../components/Search';
 import { EditItemForm } from '../components/EditItemForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { getItems, getItem, deleteItem } from '../redux/reducer/itemSlice';
@@ -125,23 +125,6 @@ const Buttons = styled.div`
   }
 `;
 
-const ElementWrapper = styled(Container)`
-  position: fixed;
-  top: 80px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: ${({ theme }) => theme.space.sm};
-  padding-bottom: ${({ theme }) => theme.space.sm};
-  background-color: ${({ theme }) => theme.colors.white};
-  z-index: 1;
-  ${({ theme }) => theme.media.sm} {
-    flex-direction: column;
-    justify-content: center;
-    gap: 20px;
-  }
-`;
-
 function MsPage() {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -170,15 +153,16 @@ function MsPage() {
       return items;
     }
     return items.filter((item) => {
+      const searched = search.toLowerCase();
       const itemId = item.id.toString();
       const itemName = item.name.toLowerCase();
       const itemPrice = item.price.toLowerCase();
       const itemStock = item.quantity.toLowerCase();
       return (
-        itemId.includes(search) ||
-        itemName.includes(search) ||
-        itemPrice.includes(search) ||
-        itemStock.includes(search)
+        itemId.includes(searched) ||
+        itemName.includes(searched) ||
+        itemPrice.includes(searched) ||
+        itemStock.includes(searched)
       );
     });
   };
