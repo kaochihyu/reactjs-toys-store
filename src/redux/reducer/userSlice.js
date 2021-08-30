@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { setAuthToken } from "../../utils";
-import { registerAPI, loginAPI, getMeAPI, updateCartAPI, linePushAPI } from "../../WebAPI";
+import { registerAPI, loginAPI, getMeAPI, updateCartAPI } from "../../WebAPI";
 
 const userReducer = createSlice({
   name: "user",

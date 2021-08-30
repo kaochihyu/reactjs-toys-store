@@ -11,7 +11,7 @@ import {
   DeleteButton,
 } from "../components/Button";
 import { Footer } from "../components/Footer";
-import { updateUserCart, linePush } from "../redux/reducer/userSlice";
+import { updateUserCart } from "../redux/reducer/userSlice";
 
 const PageContainer = styled(Container)`
   top: 5rem;
@@ -216,6 +216,17 @@ function CartPage() {
     dispatch(updateUserCart(user.id, cartData));
   };
 
+  const handleCheckout = () => {
+    let userId = 'U5d094cdc4ff73e394bc5be2543bd8a9c';
+    let message = {
+      type: 'text',
+      text: '測試 line push Hello World!'
+    }
+    console.log("checkout");
+    console.log("linepush");
+    dispatch(linePush(userId, message));
+  }
+
   return (
     <PageContainer>
       {user ? <H1>{user.nickname}&apos;s Cart</H1> : <H1>My Cart</H1>}
@@ -272,7 +283,7 @@ function CartPage() {
             <H3>Total Price</H3>
             <H3>${total}</H3>
           </Total>
-          <ActionButton content={"Check out"} color={"primary"} />
+          <ActionButton content={"Check out"} color={"primary"} onClick={handleCheckout} />
         </CheckOut>
       )}
       <Footer />
