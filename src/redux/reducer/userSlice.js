@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { setAuthToken } from "../../utils";
-import { registerAPI, loginAPI, getMeAPI, updateCartAPI } from "../../WebAPI";
+import { registerAPI, loginAPI, getMeAPI, updateCartAPI, linePushAPI } from "../../WebAPI";
 
 const userReducer = createSlice({
   name: "user",
@@ -82,5 +82,14 @@ export const updateUserCart = (id, cart) => (dispatch) => {
     return res;
   });
 };
+
+export const linePush = (userId, message) => (dispatch) => {
+  dispatch(setIsLoadingUser(true));
+  return linePushAPI(userId, message).then((res) => {
+    console.log("LINE", res);
+    return res;
+  });
+};
+
 
 export default userReducer.reducer;
