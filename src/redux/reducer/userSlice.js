@@ -83,13 +83,4 @@ export const updateUserCart = (id, cart) => (dispatch) => {
   });
 };
 
-export const linePush = (userId, message) => (dispatch) => {
-  dispatch(setIsLoadingUser(true));
-  return linePushAPI(userId, message).then((res) => {
-    console.log("LINE", res);
-    return res;
-  });
-};
-
-
 export default userReducer.reducer;

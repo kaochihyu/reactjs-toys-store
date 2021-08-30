@@ -113,21 +113,3 @@ export const updateCartAPI = (id, cart) => {
     body: JSON.stringify({ cart }),
   }).then((res) => res.json());
 };
-
-
-export const linePushAPI = (userId, message) => {
-  const token = '6Ika9sDJnm4vvqJMVEdx602trzDankplwB+MNKmEdSg9NNGCvlPTXltbP2v5DEQdMOjVCjZr5XU8XuZ687Txy4UwgSPDQyW/cBdt+DuC38F+pJSCDxLaWwi97tXTYQm/JcaL60NuarWHMzwdIJ+r3QdB04t89/1O/w1cDnyilFU=';
-  console.log(userId, message);
-  return fetch(`https://api.line.me/v2/bot/message/push`, {
-
-    method: "POST",
-    headers: {
-      "content-type": "application/json; charset=UTF-8",
-      "authorization": `Bearer ${token}`,
-    },
-    'payload': JSON.stringify({
-      'to': userId,
-      'messages': [message]
-    }),
-  }).then((res) => res.json());
-};
