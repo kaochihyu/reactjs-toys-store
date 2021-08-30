@@ -272,7 +272,7 @@ function CartPage() {
             <H3>Total Price</H3>
             <H3>${total}</H3>
           </Total>
-          <ActionButton content={"Check out"} color={"primary"} onClick={handleCheckout} />
+          <ActionButton content={"Check out"} color={"primary"} />
         </CheckOut>
       )}
       <Footer />
